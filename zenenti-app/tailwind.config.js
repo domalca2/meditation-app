@@ -4,7 +4,13 @@ module.exports = {
   content: ["./app/**/*.{js,jsx,ts,tsx}", "./components/**/*.{js,jsx,ts,tsx}"],
   presets: [require("nativewind/preset")],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        "alegra-medium": ["AlegreyaSans-Medium"],
+        "alegra-regular": ["AlegreyaSans-Regular"],
+        "alegra-bold": ["AlegreyaSans-Bold"],
+      },
+    },
   },
   plugins: [],
 };
