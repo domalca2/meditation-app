@@ -5,6 +5,12 @@ module.exports = {
   presets: [require("nativewind/preset")],
   theme: {
     extend: {
+      colors: {
+        primary: "#3B53A1",
+        secondary: "#F28A47",
+        tertiary: "#000",
+        bgMain: "#FFF",
+      },
       fontFamily: {
         "alegra-medium": ["AlegreyaSans-Medium"],
         "alegra-regular": ["AlegreyaSans-Regular"],
