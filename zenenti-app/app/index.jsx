@@ -3,13 +3,13 @@ import { SafeAreaView, Text, View } from "react-native";
 
 export default function App() {
   return (
-    <SafeAreaView>
-      <View className="mt-6 mx-2.5 bg-primary p-10">
-        <Text className="text-5xl font-alegra-bold text-secondary">
-          Open up App.js to start working on your app test!
+    <SafeAreaView className="flex-1">
+      <View className=" bg-primary p-10 flex-1">
+        <Text className="text-5xl text-center font-alegra-bold text-secondary">
+          Respira profundamente
         </Text>
         <Text className="text-3xl font-alegra-regular">
-          Open up App.js to start working on your app test!
+          Empieza un nuevo camino
         </Text>
         <Text className="text-1xl font-alegra-medium text-bgMain">
           Open up App.js to start working on your app test!
