@@ -1,0 +1,35 @@
+name: App Continuous Integration
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Install and build app
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+        working-directory: zenenti-app
+
+      - name: Setup Expo and EAS
+        if: ${{ github.event_name == 'push' }}
+        uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Build App
+        if: ${{ github.event_name == 'push' }}
+        run: eas build --platform android --profile production --no-wait
+        working-directory: zenenti-app
