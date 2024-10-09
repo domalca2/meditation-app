@@ -1,0 +1,18 @@
+# Get the commit message
+COMMIT_MSG=$(cat "$1")
+
+echo $COMMIT_MSG
+
+# Check if the commit message follows the defined structure
+if ! echo "$COMMIT_MSG" | grep -qE "^(add|fix|delete|style|refactor|update|test|build|change|improve) .+"; then
+  echo "Commit Error: Invalid commit message format."
+  echo "Please use lowercase"
+  echo "Please use one of the following prefixes: add, fix, delete, style, refactor, update, test, build, change, or improve."
+  exit 1
+fi
+
+# Check if the message ends with an issue number
+if ! echo "$COMMIT_MSG" | grep -qE " #([0-9]+)$"; then
+  echo "Commit message should end with an issue number (e.g., #123)."
+  exit 1
+fi
