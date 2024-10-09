@@ -1,1 +1,4 @@
-# zenenti!
+# zenenti
+
+## Team Config ENV
+- Nathan 
