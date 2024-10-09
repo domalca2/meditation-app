@@ -19,7 +19,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.inspiranzaorg.zenentiapp"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -29,9 +30,8 @@
     ],
     "extra": {
       "eas": {
-        "projectId": "264aa6fd-a8d8-4c05-a53e-dd72937eeedc"
+        "projectId": "364db08a-2715-423e-a179-d3528cf5c7ce"
       }
-    },
-    "owner": "rucev"
+    }
   }
 }
