@@ -11,9 +11,6 @@ export default function App() {
         <Text className="text-3xl font-alegra-regular">
           Empieza un nuevo camino
         </Text>
-        <Text className="text-1xl font-alegra-medium text-bgMain">
-          Open up App.js to start working on your app test!
-        </Text>
         <StatusBar style="auto" />
       </View>
     </SafeAreaView>
