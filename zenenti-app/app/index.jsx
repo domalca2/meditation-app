@@ -1,5 +1,6 @@
 import { StatusBar } from "expo-status-bar";
-import { Image, Pressable, SafeAreaView, Text, View } from "react-native";
+import { Image, SafeAreaView, Text, View } from "react-native";
+import Button from "../components/Button";
 const brand = require("../assets/images/brand.png");
 const logo = require("../assets/images/logo-zenenti.png");
 
@@ -21,11 +22,7 @@ export default function App() {
             Empieza un nuevo camino
           </Text>
         </View>
-        <Pressable className="bg-secondary rounded-2xl py-4  mx-4 mb-14">
-          <Text className="text-center text-white font-alegra-medium text-4xl">
-            COMIENZA
-          </Text>
-        </Pressable>
+        <Button text={"comienza"} />
         <StatusBar style="auto" />
       </View>
     </SafeAreaView>
