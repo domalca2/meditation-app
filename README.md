@@ -101,6 +101,6 @@ git commit -m '<infinitive action> <what has changed> #<number of the issue>'
 
 Expo is a framework built upon various libraries, and occasionally, some vulnerabilities may arise that cannot be immediately fixed until updates are released. If a vulnerability's risk level is low, and we understand how it works and what to be cautious about, we can continue working with the affected functionality. In many cases, the chances of needing to rely on vulnerable features are minimal.
 
-Currently, there is no need to take action on the following vulnerabilities:
+Currently, we need to cautious on the following vulnerabilities:
 - [Node send()](https://github.com/advisories/GHSA-m6fv-jmcg-4jfg)
 - [Expo Router Cookies](https://github.com/advisories/GHSA-pxg6-pf52-xh8x)
