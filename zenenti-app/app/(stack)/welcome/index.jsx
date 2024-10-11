@@ -1,10 +1,18 @@
-import { View, Text, SafeAreaView, Image, StatusBar } from "react-native";
+import {
+  View,
+  Text,
+  SafeAreaView,
+  Image,
+  StatusBar,
+  Pressable,
+} from "react-native";
 import React from "react";
-import Button from "../../components/Button";
+import Button from "../../../components/Button";
+import { router } from "expo-router";
 
 const WelcomeScreen = () => {
-  const brand = require("../../assets/images/brand.png");
-  const logo = require("../../assets/images/logo-zenenti.png");
+  const brand = require("../../../assets/images/brand.png");
+  const logo = require("../../../assets/images/logo-zenenti.png");
   return (
     <SafeAreaView className="flex-1">
       <View className=" bg-primary flex-1 py-14">
@@ -22,7 +30,7 @@ const WelcomeScreen = () => {
             Empieza un nuevo camino
           </Text>
         </View>
-        <Button text={"comienza"} />
+        <Button text={"comienza"} onPress={() => router.push("/greeting")} />
         <StatusBar style="auto" />
       </View>
     </SafeAreaView>
