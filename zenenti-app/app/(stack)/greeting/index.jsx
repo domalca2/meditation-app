@@ -2,6 +2,7 @@ import { View, Text, SafeAreaView } from "react-native";
 import React from "react";
 import Button from "../../../components/Button";
 import Pet from "../../../components/Pet";
+import { router } from "expo-router";
 
 const GreetingScreen = () => {
   return (
@@ -22,7 +23,7 @@ const GreetingScreen = () => {
           </Text>
         </View>
         <Pet />
-        <Button text={"continuar"} />
+        <Button text={"continuar"} onPress={() => router.push("/register")} />
       </View>
     </SafeAreaView>
   );
