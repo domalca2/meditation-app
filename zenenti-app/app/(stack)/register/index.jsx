@@ -3,7 +3,7 @@ import React from "react";
 import Button from "../../../components/Button";
 import Pet from "../../../components/Pet";
 
-const GreetingScreen = () => {
+export default function RegisterScreen() {
   return (
     <SafeAreaView className="flex-1">
       <View className=" bg-primary flex-1 justify-center px-4">
@@ -26,6 +26,4 @@ const GreetingScreen = () => {
       </View>
     </SafeAreaView>
   );
-};
-
-export default GreetingScreen;
+}
