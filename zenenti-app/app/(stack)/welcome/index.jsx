@@ -1,11 +1,4 @@
-import {
-  View,
-  Text,
-  SafeAreaView,
-  Image,
-  StatusBar,
-  Pressable,
-} from "react-native";
+import { View, Text, SafeAreaView, Image, StatusBar } from "react-native";
 import React from "react";
 import Button from "../../../components/Button";
 import { router } from "expo-router";
