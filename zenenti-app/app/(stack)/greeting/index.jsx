@@ -1,6 +1,7 @@
 import { View, Text, SafeAreaView, Image } from "react-native";
 import React from "react";
 import Button from "../../../components/Button";
+import Pet from "../../../components/Pet";
 const mascota = require("../../../assets/images/mascota.png");
 
 const GreetingScreen = () => {
@@ -21,9 +22,7 @@ const GreetingScreen = () => {
             acompañarte en esta experiencia
           </Text>
         </View>
-        <View className="flex justify-center align-middle flex-row">
-          <Image source={mascota} />
-        </View>
+        <Pet />
         <Button text={"continuar"} />
       </View>
     </SafeAreaView>
