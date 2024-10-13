@@ -9,16 +9,10 @@ export default function RegisterScreen() {
       <View className=" bg-primary flex-1 justify-center px-4">
         <View className="bg-white rounded-lg py-6 mt-8 mb-8">
           <Text className="font-alegra-regular text-2xl text-black text-center">
-            Hola! Te doy la bienvenida a Zenenti.
+            Me encantaría conocerte un poco mejor.
           </Text>
           <Text className="font-alegra-regular text-2xl text-black text-center">
-            Un espacio para conectar contigo.
-          </Text>
-          <Text className="font-alegra-regular text-2xl text-black text-center">
-            Yo soy Zenti, estoy aquí para
-          </Text>
-          <Text className="font-alegra-regular text-2xl text-black text-center">
-            acompañarte en esta experiencia
+            ¿Cómo te llamas?
           </Text>
         </View>
         <Pet />
