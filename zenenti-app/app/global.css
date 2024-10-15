@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@keyframes animate-soft-pulse {
+  0%   { opacity: 1.0; }
+  50%  { opacity: 0.5; }
+  100% { opacity: 1.0; }
+}
+
+.animate-soft-pulse {
+  animation: animate-soft-pulse 2.5s ease-in-out infinite;
+}
