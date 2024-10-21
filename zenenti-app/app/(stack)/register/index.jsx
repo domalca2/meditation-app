@@ -1,11 +1,13 @@
 import { View, Text, SafeAreaView } from "react-native";
-import { useState } from "react";
+import { useContext } from "react";
 import Button from "../../../components/Button";
 import Pet from "../../../components/Pet";
 import TextInput from "../../../components/TextInput";
+import { UserContext } from "../../../contexts/userContext";
+import { router } from "expo-router";
 
 export default function RegisterScreen() {
-  const [name, setName] = useState("");
+  const { name, setName } = useContext(UserContext);
 
   function handleNameChange(text) {
     setName(text);
@@ -14,6 +16,7 @@ export default function RegisterScreen() {
   function handleContinue() {
     // TODO: Save name in persistent context
     // TODO: Proceed to next screen
+    router.push("/welcome3");
   }
 
   return (
