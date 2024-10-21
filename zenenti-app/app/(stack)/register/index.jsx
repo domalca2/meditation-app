@@ -3,9 +3,11 @@ import { useState } from "react";
 import Button from "../../../components/Button";
 import Pet from "../../../components/Pet";
 import TextInput from "../../../components/TextInput";
+import { useRouter } from "expo-router";
 
 export default function RegisterScreen() {
   const [name, setName] = useState("");
+  const router = useRouter();
 
   function handleNameChange(text) {
     setName(text);
@@ -13,7 +15,7 @@ export default function RegisterScreen() {
 
   function handleContinue() {
     // TODO: Save name in persistent context
-    // TODO: Proceed to next screen
+    router.push("/tutorial");
   }
 
   return (
