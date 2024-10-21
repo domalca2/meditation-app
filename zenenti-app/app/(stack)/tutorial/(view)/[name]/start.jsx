@@ -13,9 +13,11 @@ const Start = () => {
   }
 
   return (
-    <SafeAreaView className="flex-1">
-      <View className="bg-primary flex-1 flex-col items-center">
-        <Text>{tutorial.title}</Text>
+    <SafeAreaView className="bg-primary flex-1 justify-center">
+      <View className="flex flex-col items-center">
+        <Text className="font-alegra-medium text-white">
+          {tutorial.title}
+        </Text>
         <View></View>
         <Pet />
         <SlideButton onPress={startTutorial} />
