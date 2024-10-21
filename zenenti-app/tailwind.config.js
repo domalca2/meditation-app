@@ -6,11 +6,11 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: "#3B53A1",
-        secondary: "#F28A47",
-        tertiary: "#000",
-        disabled: "#444444",
-        bgMain: "#FFF",
+        primary: "#3b53a1",
+        secondary: "#e57400",
+        tertiary: "#4444",
+        disabled: "#4444",
+        bgMain: "#fffefc",
       },
       fontFamily: {
         "alegra-medium": ["AlegreyaSans-Medium"],
