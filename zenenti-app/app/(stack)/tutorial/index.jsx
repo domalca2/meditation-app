@@ -18,7 +18,7 @@ const TutorialIndexButton = ({ index, text, onPress }) => {
   );
 };
 
-const TutorialOverview = () => {
+const TutorialIndex = () => {
   const router = useRouter();
 
   return (
@@ -29,13 +29,13 @@ const TutorialOverview = () => {
         </Text>
       </View>
       <View className="flex-1 flex-col px-10">
-        {Object.entries(tutorial).map(([name, tut], index) => (
+        {tutorial.map(({ name, title }, index) => (
           <TutorialIndexButton
             key={name}
             index={index + 1}
-            text={tut.title}
+            text={title}
             onPress={() => {
-              router.push(`/tutorial/${name}/start`);
+              router.push(`/tutorial/${name}`);
             }}
           />
         ))}
@@ -45,4 +45,4 @@ const TutorialOverview = () => {
   );
 };
 
-export default TutorialOverview;
+export default TutorialIndex;

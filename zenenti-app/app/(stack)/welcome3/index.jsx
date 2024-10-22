@@ -10,7 +10,7 @@ const Welcome3Screen = () => {
   const { name } = useContext(UserContext);
 
   function startTutorial() {
-    router.push("/tutorial");
+    router.push("/tutorial/introduction");
   }
 
   return (
