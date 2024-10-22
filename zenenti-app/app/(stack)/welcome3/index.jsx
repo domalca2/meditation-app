@@ -3,9 +3,16 @@ import React, { useContext } from "react";
 import { UserContext } from "../../../contexts/userContext";
 import Pet from "../../../components/Pet";
 import Button from "../../../components/Button";
+import { useRouter } from "expo-router";
 
 const Welcome3Screen = () => {
+  const router = useRouter();
   const { name } = useContext(UserContext);
+
+  function startTutorial() {
+    router.push("/tutorial");
+  }
+
   return (
     <SafeAreaView className="flex-1">
       <View className="bg-primary flex-1 justify-center px-4">
@@ -30,7 +37,7 @@ const Welcome3Screen = () => {
           </Text>
         </View>
         <Pet />
-        <Button text={"Continuar"} />
+        <Button text={"Continuar"} onPress={startTutorial} />
       </View>
     </SafeAreaView>
   );
