@@ -1,7 +1,7 @@
 import tutorial from "../app/tutorial.js";
 import { useLocalSearchParams } from "expo-router";
 
-export default function useTutorial() {
+const useTutorial =() => {
   const { name } = useLocalSearchParams();
 
   const index = tutorial.findIndex((step) => step.name === name);
@@ -14,3 +14,4 @@ export default function useTutorial() {
     },
   };
 }
+export default useTutorial;
