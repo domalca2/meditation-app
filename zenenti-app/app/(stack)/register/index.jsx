@@ -6,16 +6,16 @@ import TextInput from "../../../components/TextInput";
 import { UserContext } from "../../../contexts/userContext";
 import { router } from "expo-router";
 
-export default function RegisterScreen() {
+const RegisterScreen =() =>{
   const { name, setName } = useContext(UserContext);
 
-  function handleNameChange(text) {
+  const handleNameChange= (text) => {
     setName(text);
   }
+  
 
-  function handleContinue() {
-    // TODO: Save name in persistent context
-    // TODO: Proceed to next screen
+  const handleContinue= () => {
+    
     router.push("/welcome3");
   }
 
@@ -45,3 +45,4 @@ export default function RegisterScreen() {
     </SafeAreaView>
   );
 }
+export default RegisterScreen;
