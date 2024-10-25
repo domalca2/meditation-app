@@ -9,10 +9,10 @@ const WelcomeScreen = () => {
   return (
     <SafeAreaView className="flex-1">
       <View className="bg-primary flex-1 py-14">
-        <View className="px-14">
+        <View className="px-14 items-center justify-center">
           <Image source={logo} />
         </View>
-        <View className="px-12">
+        <View className="px-14 items-center justify-center">
           <Image source={brand} />
         </View>
         <View className="px-7 my-11 ">
