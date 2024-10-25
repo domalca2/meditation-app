@@ -1,4 +1,4 @@
-import { Text, SafeAreaView, View } from "react-native";
+import { Text, SafeAreaView, View, Button } from "react-native";
 import useTutorial from "../../../../hooks/useTutorial";
 import Pet from "../../../../components/Pet";
 import SlideButton from "../../../../components/SlideButton";
@@ -11,69 +11,71 @@ const Name = () => {
   const router = useRouter();
   const navigation = useNavigation();
   const { tutorial, hasNext, getNextTutorial } = useTutorial();
-  const [sound, setSound] = useState();
-  const [soundReady, setSoundReady] = useState(false);
-  const [subtitle, setSubtitle] = useState(false);
+  const [sound, setSound] = useState(null);
+  const [subtitle, setSubtitle] = useState("");
 
-  function continueTutorial() {
+  // Detener el audio y continuar en el tutorial
+  const continueTutorial = async () => {
+    if (sound) {
+      await sound.stopAsync(); // Detener el audio
+    }
+    setSubtitle(""); // Limpiar subtítulos
+
     if (hasNext) {
       router.push(`/tutorial/${getNextTutorial().name}`);
     } else {
       navigation.navigate("tutorial/index");
     }
-  }
+  };
 
+  // Cargar y reproducir automáticamente el audio
   useEffect(() => {
     const loadSound = async () => {
       if (tutorial.audio) {
-        const soundObj = await Audio.Sound.createAsync(
+        const { sound } = await Audio.Sound.createAsync(
           tutorial.audio,
-          {},
-          (status) => {
-            if (status.isLoaded) {
-              setSoundReady(true);
-            }
-          },
+          { shouldPlay: true } // Reproducción automática al cargar
         );
-
-        setSound(soundObj.sound);
+        setSound(sound);
       }
     };
 
     loadSound();
-  }, [tutorial.audio, tutorial.subtitles]);
 
-  useEffect(() => {
-    if (sound && soundReady) {
-      sound.playAsync();
-    }
-
+    // Limpiar al desmontar el componente
     return () => {
       if (sound) {
         sound.unloadAsync();
       }
     };
-  }, [sound, soundReady]);
+  }, [tutorial.audio]);
 
-  /*
-   * Workaround for `expo-av` bug which doesn't call onPlaybackStatusUpdate
-   * https://github.com/expo/expo/issues/29044
-   */
+  // Actualización de los subtítulos
   useEffect(() => {
     const updateSubtitles = setInterval(async () => {
-      const status = await sound.getStatusAsync();
-
-      for (const { start, message } of tutorial.subtitles) {
-        if (start < status.positionMillis / 1000) {
-          setSubtitle(message);
+      if (sound) {
+        const status = await sound.getStatusAsync();
+        if (status.isPlaying) {
+          for (const { start, message } of tutorial.subtitles) {
+            if (start <= status.positionMillis / 1000) {
+              setSubtitle(message);
+            }
+          }
         }
       }
     }, 500);
 
-    return () => {
-      clearInterval(updateSubtitles);
-    };
+    return () => clearInterval(updateSubtitles);
   }, [sound]);
+
+  // Detener el audio y saltar al final
+  const stopAndSkipToEnd = async () => {
+    if (sound) {
+      await sound.stopAsync(); // Detener el audio
+    }
+    setSubtitle(""); // Limpiar subtítulos
+    navigation.navigate("tutorial/index"); // Redirigir a la página principal del tutorial
+  };
 
   return (
     <SafeAreaView className="bg-primary flex-1 justify-center">
@@ -81,10 +83,19 @@ const Name = () => {
         <Text className="font-alegra-medium text-white text-5xl">
           {tutorial.title}
         </Text>
+        
         <View>
           {subtitle && <MessageBubble text={subtitle} />}
         </View>
+
         <Pet />
+
+        {/* Botón para detener el audio y saltar al final */}
+        <View style={{ marginVertical: 10 }}>
+          <Button title="Saltar al final del tutorial" onPress={stopAndSkipToEnd} />
+        </View>
+
+        {/* Botón para continuar en el tutorial */}
         <SlideButton onPress={continueTutorial} />
       </View>
     </SafeAreaView>
