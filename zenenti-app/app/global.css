@@ -11,29 +11,3 @@
 .animate-soft-pulse {
   animation: animate-soft-pulse 2.5s ease-in-out infinite;
 }
-
-.tutorial-sections {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: relative;
-  margin: 10px 0;
-}
-
-/* Estilo para el botón Saltar al final */
-.skip-button {
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-.skip-button:hover {
-  background-color: #0056b3;
-}
