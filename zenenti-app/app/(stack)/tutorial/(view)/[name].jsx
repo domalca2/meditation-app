@@ -28,14 +28,21 @@ const Name = () => {
     }
   };
 
+  const stopAndSkipToEnd = async () => {
+    if (sound) {
+      await sound.stopAsync();
+    }
+    setSubtitle("");
+    navigation.navigate("tutorial/index");
+  };
+
   useEffect(() => {
     const loadSound = async () => {
       if (tutorial.audio) {
-        const { sound } = await Audio.Sound.createAsync(
-          tutorial.audio,
-          { shouldPlay: true }
-        );
-        setSound(sound);
+        const soundObj = await Audio.Sound.createAsync(tutorial.audio, {
+          shouldPlay: true,
+        });
+        setSound(soundObj.sound);
       }
     };
 
@@ -48,6 +55,10 @@ const Name = () => {
     };
   }, [tutorial.audio]);
 
+  /*
+   * Workaround for `expo-av` bug which doesn't call onPlaybackStatusUpdate
+   * https://github.com/expo/expo/issues/29044
+   */
   useEffect(() => {
     const updateSubtitles = setInterval(async () => {
       if (sound) {
@@ -63,35 +74,28 @@ const Name = () => {
     }, 500);
 
     return () => clearInterval(updateSubtitles);
-  }, [sound]);
-
-  const stopAndSkipToEnd = async () => {
-    if (sound) {
-      await sound.stopAsync();
-    }
-    setSubtitle("");
-    navigation.navigate("tutorial/index");
-  };
+  }, [sound, tutorial.subtitles]);
 
   return (
     <SafeAreaView className="bg-primary flex-1 justify-center">
-      <View className="flex-1 py-16 flex-col items-center justify-between">
-        <Text className="font-alegra-medium text-white text-5xl">
-          {tutorial.title}
-        </Text>
-
-        <View>
-          {subtitle && <MessageBubble text={subtitle} />}
+      <View className="flex-1 flex-col items-center justify-between py-20">
+        <View className="flex flex-row w-full items-center justify-between px-5">
+          <Text className="h-full w-1/4" />
+          <View className="h-full w-1/2">
+            <Text className="text-center font-alegra-medium text-white text-5xl">
+              {tutorial.title}
+            </Text>
+          </View>
+          <View className="h-full w-1/4">
+            <Button
+              text="Omitir"
+              onPress={stopAndSkipToEnd}
+              styleType="secondary"
+            />
+          </View>
         </View>
-
+        <View>{subtitle && <MessageBubble text={subtitle} />}</View>
         <Pet />
-
-        <Button
-          text="Omitir"
-          onPress={stopAndSkipToEnd}
-          styleType="secondary"
-        />
-
         <SlideButton onPress={continueTutorial} />
       </View>
     </SafeAreaView>
