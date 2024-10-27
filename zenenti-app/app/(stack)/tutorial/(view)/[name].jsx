@@ -1,4 +1,4 @@
-import { Text, SafeAreaView, View, Button } from "react-native";
+import { Text, SafeAreaView, View } from "react-native";
 import useTutorial from "../../../../hooks/useTutorial";
 import Pet from "../../../../components/Pet";
 import SlideButton from "../../../../components/SlideButton";
@@ -6,6 +6,7 @@ import { useNavigation, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import { Audio } from "expo-av";
 import MessageBubble from "../../../../components/MessageBubble";
+import Button from "../../../../components/Button";
 
 const Name = () => {
   const router = useRouter();
@@ -14,12 +15,11 @@ const Name = () => {
   const [sound, setSound] = useState(null);
   const [subtitle, setSubtitle] = useState("");
 
-  // Detener el audio y continuar en el tutorial
   const continueTutorial = async () => {
     if (sound) {
-      await sound.stopAsync(); // Detener el audio
+      await sound.stopAsync();
     }
-    setSubtitle(""); // Limpiar subtítulos
+    setSubtitle("");
 
     if (hasNext) {
       router.push(`/tutorial/${getNextTutorial().name}`);
@@ -28,13 +28,12 @@ const Name = () => {
     }
   };
 
-  // Cargar y reproducir automáticamente el audio
   useEffect(() => {
     const loadSound = async () => {
       if (tutorial.audio) {
         const { sound } = await Audio.Sound.createAsync(
           tutorial.audio,
-          { shouldPlay: true } // Reproducción automática al cargar
+          { shouldPlay: true }
         );
         setSound(sound);
       }
@@ -42,7 +41,6 @@ const Name = () => {
 
     loadSound();
 
-    // Limpiar al desmontar el componente
     return () => {
       if (sound) {
         sound.unloadAsync();
@@ -50,7 +48,6 @@ const Name = () => {
     };
   }, [tutorial.audio]);
 
-  // Actualización de los subtítulos
   useEffect(() => {
     const updateSubtitles = setInterval(async () => {
       if (sound) {
@@ -68,13 +65,12 @@ const Name = () => {
     return () => clearInterval(updateSubtitles);
   }, [sound]);
 
-  // Detener el audio y saltar al final
   const stopAndSkipToEnd = async () => {
     if (sound) {
-      await sound.stopAsync(); // Detener el audio
+      await sound.stopAsync();
     }
-    setSubtitle(""); // Limpiar subtítulos
-    navigation.navigate("tutorial/index"); // Redirigir a la página principal del tutorial
+    setSubtitle("");
+    navigation.navigate("tutorial/index");
   };
 
   return (
@@ -83,19 +79,19 @@ const Name = () => {
         <Text className="font-alegra-medium text-white text-5xl">
           {tutorial.title}
         </Text>
-        
+
         <View>
           {subtitle && <MessageBubble text={subtitle} />}
         </View>
 
         <Pet />
 
-        {/* Botón para detener el audio y saltar al final */}
-        <View style={{ marginVertical: 10 }}>
-          <Button title="Saltar al final del tutorial" onPress={stopAndSkipToEnd} />
-        </View>
+        <Button
+          text="Omitir"
+          onPress={stopAndSkipToEnd}
+          styleType="secondary"
+        />
 
-        {/* Botón para continuar en el tutorial */}
         <SlideButton onPress={continueTutorial} />
       </View>
     </SafeAreaView>
