@@ -23,24 +23,26 @@ const TutorialIndex = () => {
 
   return (
     <SafeAreaView className="bg-primary flex-1">
-      <View>
-        <Text className="text-5xl text-center font-alegra-regular text-white p-14">
-          ¿Qué parte quieres volver a ver?
-        </Text>
+      <View className="flex h-full pb-5">
+        <View>
+          <Text className="text-5xl text-center font-alegra-regular text-white p-14">
+            ¿Qué parte quieres volver a ver?
+          </Text>
+        </View>
+        <View className="flex-1 flex-col px-10 gap-5">
+          {tutorial.map(({ name, title }, index) => (
+            <TutorialIndexButton
+              key={name}
+              index={index + 1}
+              text={title}
+              onPress={() => {
+                router.push(`/tutorial/${name}`);
+              }}
+            />
+          ))}
+        </View>
+        <Button text="continuar" />
       </View>
-      <View className="flex-1 flex-col px-10">
-        {tutorial.map(({ name, title }, index) => (
-          <TutorialIndexButton
-            key={name}
-            index={index + 1}
-            text={title}
-            onPress={() => {
-              router.push(`/tutorial/${name}`);
-            }}
-          />
-        ))}
-      </View>
-      <Button text="continuar" />
     </SafeAreaView>
   );
 };
