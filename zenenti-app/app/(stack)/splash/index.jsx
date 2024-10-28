@@ -1,7 +1,6 @@
-import { Image, SafeAreaView } from "react-native";
+import { Image, SafeAreaView, View } from "react-native";
 import { router } from "expo-router";
 import { useEffect } from "react";
-import Animated from "react-native-reanimated";
 
 const SplashScreen = () => {
   async function fetchData() {
@@ -22,9 +21,9 @@ const SplashScreen = () => {
   const logo = require("../../../assets/images/logo-zenenti.png");
   return (
     <SafeAreaView className={"bg-primary flex items-center justify-center h-full"}>
-      <Animated.View className={"animate-soft-pulse"}>
+      <View>
         <Image source={logo} />
-      </Animated.View>
+      </View>
     </SafeAreaView>
   );
 };
