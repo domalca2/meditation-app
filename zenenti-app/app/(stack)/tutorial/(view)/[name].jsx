@@ -64,7 +64,9 @@ const Name = () => {
             />
           </View>
         </View>
-        <View>{subtitle && <MessageBubble text={subtitle} />}</View>
+        <View className="w-full px-5">
+          {subtitle && <MessageBubble text={subtitle} />}
+        </View>
         <View className="w-full px-5">
           <AudioPlayer
             audio={tutorial.audio}
