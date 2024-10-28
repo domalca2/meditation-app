@@ -2,12 +2,17 @@ import { useEffect, useState } from "react";
 import { Audio } from "expo-av";
 import { Image, Pressable, Text, View } from "react-native";
 
-const AudioPlayer = ({ audio, onProgress, onStateChange, shouldPlay = true }) => {
+const AudioPlayer = ({
+  audio,
+  onProgress,
+  onStateChange,
+  shouldPlay = true,
+}) => {
   const [state, setState] = useState("idle");
   const [sound, setSound] = useState(null);
   const [audioDuration, setAudioDuration] = useState(0);
   const [playbackSeconds, setPlaybackSeconds] = useState(0);
-  const [playbarWidth, setPlaybarWidth] = useState(0);
+  const [playbarLayout, setPlaybarLayout] = useState({});
 
   const pauseButton = require("../assets/images/pause-button.png");
   const playButton = require("../assets/images/play-button-small.png");
@@ -45,12 +50,19 @@ const AudioPlayer = ({ audio, onProgress, onStateChange, shouldPlay = true }) =>
 
       await sound.pauseAsync();
 
-      const playbackPercent = e.nativeEvent.locationX / playbarWidth;
-      setPlaybackSeconds(
-        Math.floor(
-          Math.max(0, Math.min(playbackPercent * audioDuration, audioDuration)),
-        ),
+      // 15 a magic number for touch width, since react-native doesn't seem to want to give the actual value.
+      const localX = e.nativeEvent.pageX - playbarLayout.x - 15;
+
+      const playbackPercent = localX / playbarLayout.width;
+      const scrollTo = Math.floor(
+        Math.max(0, Math.min(playbackPercent * audioDuration, audioDuration)),
       );
+
+      console.log(
+        `Location: ${localX}, Percentage: ${playbackPercent}, NewPlaybackSeconds: ${scrollTo}`,
+      );
+
+      setPlaybackSeconds(scrollTo);
     }
   };
 
@@ -140,28 +152,32 @@ const AudioPlayer = ({ audio, onProgress, onStateChange, shouldPlay = true }) =>
   return (
     <View className="w-full flex-row gap-5 items-center">
       <Pressable onPress={doPlayPause} className="w-10 h-10">
-        <Image className="w-full h-full" source={state === "playing" ? pauseButton : playButton} />
+        <Image
+          className="w-full h-full"
+          source={state === "playing" ? pauseButton : playButton}
+        />
       </Pressable>
       <View
         onTouchStart={handleTouch}
         onTouchMove={handleTouch}
         onTouchEnd={handleTouchEnd}
         onLayout={(e) => {
-          setPlaybarWidth(e.nativeEvent.layout.width);
+          setPlaybarLayout(e.nativeEvent.layout);
         }}
-        className="h-5 flex-grow rounded-full"
+        className="h-5 flex-grow rounded-full relative overflow-hidden"
       >
+        <View className="bg-white opacity-15 w-full h-full rounded-full absolute" />
         <View
           style={{ width: `${(playbackSeconds / audioDuration) * 100}%` }}
-          className="bg-secondary h-full rounded-full"
+          className="bg-secondary h-full rounded-full absolute"
         />
       </View>
       <View className="flex flex-row">
-        <Text className="font-alegra-medium text-white text-xl">
+        <Text className="font-mono text-white text-l">
           {createTimeString(playbackSeconds)}
         </Text>
-        <Text className="font-alegra-medium text-white text-xl"> / </Text>
-        <Text className="font-alegra-medium text-white text-xl">
+        <Text className="font-mono text-white text-l"> / </Text>
+        <Text className="font-mono text-white text-l">
           {createTimeString(audioDuration)}
         </Text>
       </View>

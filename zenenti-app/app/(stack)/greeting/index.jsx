@@ -7,7 +7,7 @@ import { router } from "expo-router";
 const GreetingScreen = () => {
   return (
     <SafeAreaView className="flex-1">
-      <View className=" bg-primary flex-1 justify-center px-4">
+      <View className=" bg-primary flex-1 justify-center px-4 pb-5">
         <View className="bg-white rounded-lg py-6 mt-8 mb-8">
           <Text className="font-alegra-regular text-2xl text-black text-center">
             Hola! Te doy la bienvenida a Zenenti.

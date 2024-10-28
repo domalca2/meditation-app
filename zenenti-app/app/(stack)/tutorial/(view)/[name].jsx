@@ -3,7 +3,7 @@ import useTutorial from "../../../../hooks/useTutorial";
 import Pet from "../../../../components/Pet";
 import SlideButton from "../../../../components/SlideButton";
 import { useNavigation, useRouter } from "expo-router";
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import MessageBubble from "../../../../components/MessageBubble";
 import Button from "../../../../components/Button";
 import AudioPlayer from "../../../../components/AudioPlayer";
@@ -47,8 +47,8 @@ const Name = () => {
   }, [setPlayAudio]);
 
   return (
-    <SafeAreaView className="bg-primary flex-1 justify-center">
-      <View className="flex-1 flex-col items-center py-20">
+    <SafeAreaView className="bg-primary flex-1 justify-center py-20">
+      <View className="flex-1 flex-col items-center">
         <View className="flex flex-row w-full items-center justify-between px-5">
           <Text className="h-full w-1/4" />
           <View className="h-full w-1/2">
@@ -66,7 +66,11 @@ const Name = () => {
         </View>
         <View>{subtitle && <MessageBubble text={subtitle} />}</View>
         <View className="w-full px-5">
-          <AudioPlayer audio={tutorial.audio} shouldPlay={playAudio} onProgress={onPlaybackProgress} />
+          <AudioPlayer
+            audio={tutorial.audio}
+            shouldPlay={playAudio}
+            onProgress={onPlaybackProgress}
+          />
         </View>
         <Pet />
         <SlideButton onPress={continueTutorial} />
