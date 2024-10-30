@@ -1,13 +1,17 @@
 import { View, Text, SafeAreaView } from "react-native";
-import React, { useContext } from "react";
-import { UserContext } from "../../../contexts/userContext";
+import React from "react";
 import Pet from "../../../components/Pet";
 import Button from "../../../components/Button";
 import { useRouter } from "expo-router";
+import { useQuery } from "@tanstack/react-query";
+import { mockQuery } from "../../../mock/mock";
 
 const Welcome3Screen = () => {
   const router = useRouter();
-  const { name } = useContext(UserContext);
+  const username = useQuery({
+    queryKey: ["user", "name"],
+    queryFn: mockQuery("user/name"),
+  });
 
   function startTutorial() {
     router.push("/tutorial/introduction");
@@ -18,7 +22,7 @@ const Welcome3Screen = () => {
       <View className="bg-primary flex-1 justify-center px-4 pb-5">
         <View className="bg-white rounded-lg py-6 mt-8 mb-8">
           <Text className="font-alegra-regular text-2xl text-black text-center">
-            !Qué bien conocerte! {name}
+            ¡Qué bien conocerte! {username.data}
           </Text>
           <Text className="font-alegra-regular text-2xl text-black text-center">
             ¿Qué te parece si empezamos?
