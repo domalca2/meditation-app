@@ -1,19 +1,26 @@
 import { View, Text, SafeAreaView } from "react-native";
-import { useContext } from "react";
 import Button from "../../../components/Button";
 import Pet from "../../../components/Pet";
 import TextInput from "../../../components/TextInput";
-import { UserContext } from "../../../contexts/userContext";
 import { router } from "expo-router";
+import { useState } from "react";
+import { useMutation } from "@tanstack/react-query";
+import { mockMutation } from "../../../mock/mock";
+import { queryClient } from "../../../query/query";
 
 const RegisterScreen = () => {
-  const { name, setName } = useContext(UserContext);
+  const [username, setUsername] = useState("");
 
-  const handleNameChange = (text) => {
-    setName(text);
-  };
+  const usernameMutation = useMutation({
+    mutationFn: mockMutation("user/name"),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["user", "name"] });
+    },
+  });
 
-  const handleContinue = () => {
+  const handleContinue = async () => {
+    await usernameMutation.mutate(username);
+
     router.push("/welcome3");
   };
 
@@ -29,7 +36,9 @@ const RegisterScreen = () => {
           </Text>
         </View>
         <TextInput
-          onChangeText={handleNameChange}
+          onChangeText={(text) => {
+            setUsername(text);
+          }}
           onSubmitEditing={handleContinue}
           placeholder={"Escribe tu nombre"}
         />
@@ -37,7 +46,7 @@ const RegisterScreen = () => {
         <Button
           text={"continuar"}
           onPress={handleContinue}
-          enabled={name && name.length > 0}
+          enabled={username && username.length > 0}
         />
       </View>
     </SafeAreaView>
