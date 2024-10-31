@@ -8,7 +8,7 @@ const Button = ({ text, onPress, enabled = true, styleType = "primary" }) => {
         onPress={enabled ? onPress : undefined}
         className={`${enabled ? "bg-secondary" : "bg-disabled"} mx-4 py-4 rounded-2xl`}
       >
-        <Text className="text-center font-alegra-medium text-white text-4xl uppercase">
+        <Text className="text-center font-alegra-medium text-white text-4xl">
           {text}
         </Text>
       </Pressable>

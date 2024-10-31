@@ -44,7 +44,7 @@ const RegisterScreen = () => {
         />
         <Pet />
         <Button
-          text={"continuar"}
+          text={"Continuar"}
           onPress={handleContinue}
           enabled={username && username.length > 0}
         />

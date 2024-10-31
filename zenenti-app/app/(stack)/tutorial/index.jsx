@@ -46,7 +46,7 @@ const TutorialIndex = () => {
             />
           ))}
         </View>
-        <Button text="continuar" onPress={dismissTutorialAndGoHome} />
+        <Button text="Continuar" onPress={dismissTutorialAndGoHome} />
       </View>
     </SafeAreaView>
   );
