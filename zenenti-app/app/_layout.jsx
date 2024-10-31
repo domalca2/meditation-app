@@ -1,9 +1,13 @@
 import { Slot, SplashScreen } from "expo-router";
 import { useFonts } from "expo-font";
-import "./global.css";
 import { useEffect } from "react";
+import { queryClient } from "../query/query";
+import { QueryClientProvider } from "@tanstack/react-query";
+
+import "./global.css";
 
 SplashScreen.preventAutoHideAsync();
+
 const RootLayout = () => {
   const [fontsLoaded, error] = useFonts({
     "AlegreyaSans-Medium": require("../assets/fonts/AlegreyaSans-Medium.ttf"),
@@ -24,7 +28,12 @@ const RootLayout = () => {
   if (!fontsLoaded && !error) {
     return null;
   }
-  return <Slot />;
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <Slot />
+    </QueryClientProvider>
+  );
 };
 
 export default RootLayout;

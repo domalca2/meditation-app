@@ -23,7 +23,10 @@ const GreetingScreen = () => {
           </Text>
         </View>
         <Pet />
-        <Button text={"Continuar"} onPress={() => router.push("/register")} />
+        <Button
+          text={"Continuar"}
+          onPress={() => router.push("/welcome/03-register")}
+        />
       </View>
     </SafeAreaView>
   );

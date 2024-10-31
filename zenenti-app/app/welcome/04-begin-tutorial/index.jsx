@@ -6,7 +6,7 @@ import { useRouter } from "expo-router";
 import { useQuery } from "@tanstack/react-query";
 import { mockQuery } from "../../../mock/mock";
 
-const Welcome3Screen = () => {
+const BeginTutorialScreen = () => {
   const router = useRouter();
   const username = useQuery({
     queryKey: ["user", "name"],
@@ -14,7 +14,7 @@ const Welcome3Screen = () => {
   });
 
   function startTutorial() {
-    router.push("/tutorial/introduction");
+    router.push("/welcome/tutorial/introduction");
   }
 
   return (
@@ -47,4 +47,4 @@ const Welcome3Screen = () => {
   );
 };
 
-export default Welcome3Screen;
+export default BeginTutorialScreen;

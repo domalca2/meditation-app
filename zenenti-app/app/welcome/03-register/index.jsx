@@ -21,7 +21,7 @@ const RegisterScreen = () => {
   const handleContinue = async () => {
     await usernameMutation.mutate(username);
 
-    router.push("/welcome3");
+    router.push("/welcome/04-begin-tutorial");
   };
 
   return (
