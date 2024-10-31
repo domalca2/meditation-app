@@ -23,7 +23,7 @@ const TutorialIndex = () => {
 
   const dismissTutorialAndGoHome = () => {
     router.dismissAll();
-    router.push("/home");
+    router.push("/main/home");
   };
 
   return (

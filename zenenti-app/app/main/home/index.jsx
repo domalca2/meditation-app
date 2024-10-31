@@ -9,7 +9,7 @@ const Home = () => {
   });
 
   return (
-    <SafeAreaView className="flex-1 px-5 py-16">
+    <SafeAreaView className="flex-1 px-5 py-16 bg-bgMain">
       <View className="flex flex-col">
         {usernameQuery.isSuccess && (
           <View>

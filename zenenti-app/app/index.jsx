@@ -1,6 +1,6 @@
 import { Redirect } from "expo-router";
 
-const App =()=> {
-  return <Redirect href={"/(stack)/splash"} />;
-}
+const App = () => {
+  return <Redirect href={"/splash"} />;
+};
 export default App;
