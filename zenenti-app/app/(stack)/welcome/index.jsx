@@ -23,7 +23,7 @@ const WelcomeScreen = () => {
             Empieza un nuevo camino
           </Text>
         </View>
-        <Button text={"comienza"} onPress={() => router.push("/greeting")} />
+        <Button text={"Comienza"} onPress={() => router.push("/greeting")} />
         <StatusBar style="auto" />
       </View>
     </SafeAreaView>
