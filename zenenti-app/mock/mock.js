@@ -1,6 +1,7 @@
 const mock = {
   user: {
     name: "Zeny",
+    finishedTutorial: false,
   },
   practice: {
     categories: ["Calma", "Dormir", "Bienestar", "Enfoque"],
