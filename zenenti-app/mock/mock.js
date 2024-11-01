@@ -4,7 +4,40 @@ const mock = {
     finishedTutorial: false,
   },
   practice: {
-    categories: ["Calma", "Dormir", "Bienestar", "Enfoque"],
+    categories: [
+      {
+        id: 0,
+        title: "Calma",
+        icon: {
+          primary: require("../assets/images/sentiment-calm-primary.png"),
+          secondary: require("../assets/images/sentiment-calm-white.png"),
+        },
+      },
+      {
+        id: 1,
+        title: "Dormir",
+        icon: {
+          primary: require("../assets/images/sleep-sounds-primary.png"),
+          secondary: require("../assets/images/sleep-sounds-white.png"),
+        },
+      },
+      {
+        id: 2,
+        title: "Bienestar",
+        icon: {
+          primary: require("../assets/images/yoga-primary.png"),
+          secondary: require("../assets/images/yoga-white.png"),
+        },
+      },
+      {
+        id: 3,
+        title: "Enfoque",
+        icon: {
+          primary: require("../assets/images/focus-primary.png"),
+          secondary: require("../assets/images/focus-white.png"),
+        },
+      },
+    ],
     types: ["Respiración", "Meditación"],
     practices: [
       {

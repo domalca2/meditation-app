@@ -58,10 +58,6 @@ const AudioPlayer = ({
         Math.max(0, Math.min(playbackPercent * audioDuration, audioDuration)),
       );
 
-      console.log(
-        `Location: ${localX}, Percentage: ${playbackPercent}, NewPlaybackSeconds: ${scrollTo}`,
-      );
-
       setPlaybackSeconds(scrollTo);
     }
   };
@@ -173,11 +169,11 @@ const AudioPlayer = ({
         />
       </View>
       <View className="flex flex-row">
-        <Text className="font-mono text-white text-l">
+        <Text className="font-roboto-mono-regular text-white text-l">
           {createTimeString(playbackSeconds)}
         </Text>
-        <Text className="font-mono text-white text-l"> / </Text>
-        <Text className="font-mono text-white text-l">
+        <Text className="font-roboto-mono-regular text-white text-l"> / </Text>
+        <Text className="font-roboto-mono-regular text-white text-l">
           {createTimeString(audioDuration)}
         </Text>
       </View>

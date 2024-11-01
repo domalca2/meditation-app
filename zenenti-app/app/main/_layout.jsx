@@ -39,11 +39,12 @@ const TabBar = ({ state, descriptors, navigation }) => {
 
         return (
           <Pressable
+            key={route.key}
             className="flex flex-col items-center justify-center"
             onPress={onPress}
             onLongPress={onLongPress}
           >
-            {options.tabBarIcon()}
+            <Image className="w-8 h-8" source={options.tabBarIcon} />
             <Text className="font-alegra-medium mt-1">{label}</Text>
           </Pressable>
         );
@@ -60,7 +61,7 @@ const MainLayout = () => {
         options={{
           title: "Inicio",
           headerShown: false,
-          tabBarIcon: () => <Image source={homeIcon} />,
+          tabBarIcon: homeIcon,
         }}
       />
       <Tabs.Screen
@@ -68,7 +69,7 @@ const MainLayout = () => {
         options={{
           title: "Explorar",
           headerShown: false,
-          tabBarIcon: () => <Image source={exploreIcon} />,
+          tabBarIcon: exploreIcon,
         }}
       />
       <Tabs.Screen
@@ -76,7 +77,7 @@ const MainLayout = () => {
         options={{
           title: "Perfil",
           headerShown: false,
-          tabBarIcon: () => <Image source={profileIcon} />,
+          tabBarIcon: profileIcon,
         }}
       />
     </Tabs>
