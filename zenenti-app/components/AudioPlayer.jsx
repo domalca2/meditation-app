@@ -58,10 +58,6 @@ const AudioPlayer = ({
         Math.max(0, Math.min(playbackPercent * audioDuration, audioDuration)),
       );
 
-      console.log(
-        `Location: ${localX}, Percentage: ${playbackPercent}, NewPlaybackSeconds: ${scrollTo}`,
-      );
-
       setPlaybackSeconds(scrollTo);
     }
   };
