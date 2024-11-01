@@ -39,6 +39,7 @@ const TabBar = ({ state, descriptors, navigation }) => {
 
         return (
           <Pressable
+            key={route.key}
             className="flex flex-col items-center justify-center"
             onPress={onPress}
             onLongPress={onLongPress}
