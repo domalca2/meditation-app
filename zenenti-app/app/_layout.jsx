@@ -13,6 +13,7 @@ const RootLayout = () => {
     "AlegreyaSans-Medium": require("../assets/fonts/AlegreyaSans-Medium.ttf"),
     "AlegreyaSans-Regular": require("../assets/fonts/AlegreyaSans-Regular.ttf"),
     "AlegreyaSans-Bold": require("../assets/fonts/AlegreyaSans-Bold.ttf"),
+    "RobotoMono-Regular": require("../assets/fonts/RobotoMono-Regular.ttf"),
   });
 
   useEffect(() => {

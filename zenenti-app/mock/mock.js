@@ -1,7 +1,7 @@
 const mock = {
   user: {
     name: "Zeny",
-    finishedTutorial: true,
+    finishedTutorial: false,
   },
   practice: {
     categories: [

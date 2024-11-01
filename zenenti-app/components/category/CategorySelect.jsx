@@ -19,6 +19,7 @@ const CategorySelect = ({ onCategorySelect }) => {
     <View className="flex flex-row justify-between items-center w-full">
       {categories.data.map((category) => (
         <CategoryButton
+          key={category.id}
           title={category.title}
           primary={category.icon.primary}
           secondary={category.icon.secondary}
