@@ -8,7 +8,7 @@ const WelcomeScreen = () => {
   const logo = require("../../../assets/images/logo-zenenti.png");
   return (
     <SafeAreaView className="flex-1">
-      <View className="bg-primary flex-1 py-14 pb-5">
+      <View className="bg-primary flex-1 py-14 px-5 pb-5">
         <View className="px-14 items-center justify-center">
           <Image source={logo} />
         </View>
