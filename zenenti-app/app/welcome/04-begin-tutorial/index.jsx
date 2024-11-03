@@ -14,7 +14,7 @@ const BeginTutorialScreen = () => {
   });
 
   function startTutorial() {
-    router.push("/welcome/tutorial/introduction");
+    router.push("/welcome/05-tutorial/introduction");
   }
 
   return (

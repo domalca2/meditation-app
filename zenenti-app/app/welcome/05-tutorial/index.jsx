@@ -21,9 +21,8 @@ const TutorialIndexButton = ({ index, text, onPress }) => {
 const TutorialIndex = () => {
   const router = useRouter();
 
-  const dismissTutorialAndGoHome = () => {
-    router.dismissAll();
-    router.push("/main/home");
+  const endTutorial = () => {
+    router.push("/welcome/06-end-tutorial");
   };
 
   return (
@@ -41,12 +40,14 @@ const TutorialIndex = () => {
               index={index + 1}
               text={title}
               onPress={() => {
-                router.push(`/tutorial/${name}`);
+                router.push(`/welcome/05-tutorial/${name}`);
               }}
             />
           ))}
         </View>
-        <Button text="Continuar" onPress={dismissTutorialAndGoHome} />
+        <View className="px-5">
+          <Button text="Continuar" onPress={endTutorial} />
+        </View>
       </View>
     </SafeAreaView>
   );

@@ -11,8 +11,15 @@ const WelcomeLayout = () => {
         name="04-begin-tutorial/index"
         options={{ title: "Welcome user" }}
       />
-      <Stack.Screen name="tutorial/index" options={{ title: "Tutorial" }} />
-      <Stack.Screen name="tutorial/(view)" options={{ headerShown: false }} />
+      <Stack.Screen name="05-tutorial/index" options={{ title: "Tutorial" }} />
+      <Stack.Screen
+        name="05-tutorial/(view)"
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="06-end-tutorial/index"
+        options={{ headerShown: false }}
+      />
     </Stack>
   );
 };
