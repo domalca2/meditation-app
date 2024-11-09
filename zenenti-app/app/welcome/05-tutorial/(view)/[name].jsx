@@ -1,3 +1,4 @@
+// Create transition
 import { Text, SafeAreaView, View } from "react-native";
 import useTutorial from "../../../../hooks/useTutorial";
 import Pet from "../../../../components/Pet";
@@ -81,6 +82,7 @@ const Name = () => {
     };
   }, [navigation]);
   
+
   return (
     <SafeAreaView className="bg-primary flex-1 justify-center py-20">
       <Animated.View style={[{ flex: 3 }, animatedStyle]}>

@@ -1,3 +1,4 @@
+//Change animation to none
 import { Stack } from "expo-router";
 import React from "react";
 
@@ -11,5 +12,6 @@ const TutorialViewerLayout = () => {
     />
   );
 };
+
 
 export default TutorialViewerLayout;
