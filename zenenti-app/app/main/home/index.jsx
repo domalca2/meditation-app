@@ -1,21 +1,28 @@
-import React from "react";
 import { Image, SafeAreaView, Text, View, FlatList } from "react-native";
 import { mockQuery } from "../../../mock/mock";
 import { useQuery } from "@tanstack/react-query";
+import { useRouter } from "expo-router";
 
 import circle from "../../../assets/images/patata.jpg";
 import flor from "../../../assets/images/flor-sugerencias.png";
 import PracticeCard from "../../../components/PracticeCard";
 
 const Home = () => {
+  const router = useRouter();
+
   const usernameQuery = useQuery({
     queryFn: mockQuery("user/name"),
     queryKey: ["user", "name"],
   });
+
   const practices = useQuery({
     queryFn: mockQuery("practice/practices"),
     queryKey: ["practice", "practices"],
   });
+
+  const startPractice = (id) => {
+    router.push(`/practice/${id}`);
+  };
 
   return (
     <SafeAreaView className="flex-1 px-4 py-14 bg-bgMain">
@@ -45,7 +52,14 @@ const Home = () => {
           contentContainerStyle={{ gap: 15 }}
           data={practices.data}
           keyExtractor={(practice) => practice.durationMillis}
-          renderItem={({ item }) => <PracticeCard practice={item} />}
+          renderItem={({ item }) => (
+            <PracticeCard
+              practice={item}
+              onPress={() => {
+                startPractice(item.id);
+              }}
+            />
+          )}
         />
       </View>
     </SafeAreaView>
