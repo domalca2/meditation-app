@@ -51,7 +51,7 @@ const mock = {
       {
         category: "Calma",
         type: ["Meditación"],
-        name: "Meditación guiada de un minuto para la calma",
+        name: "Meditación guiada ",
         durationMillis: 61000,
         level: 1,
         audio: require("../assets/audio/practice/CA_ME_1-5_N1_Meditación guiada de un minuto para la calma.mp4"),
