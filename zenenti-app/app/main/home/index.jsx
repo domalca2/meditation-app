@@ -9,8 +9,8 @@ import PracticeCard from "../../../components/PracticeCard";
 
 const Home = () => {
   const usernameQuery = useQuery({
-    queryKey: ["user/name"],
     queryFn: mockQuery("user/name"),
+    queryKey: ["user", "name"],
   });
   const practices = useQuery({
     queryFn: mockQuery("practice/practices"),
@@ -37,8 +37,8 @@ const Home = () => {
         <Text className="font-alegra-medium text-2xl mt-[25]">
           ¿Qué necesitas hoy?
         </Text>
-        <View className="bg-primary mt-5 mb-5 flex-row w-[150] p-2 justify-evenly rounded-[100]">
-          <Image source={flor} />
+        <View className="flex bg-primary mt-5 mb-5 flex-row w-[150] p-2 justify-evenly rounded-full">
+          <Image className="w-5 h-5" source={flor} />
           <Text className="text-white">Sugerencias</Text>
         </View>
         <FlatList
