@@ -42,6 +42,7 @@ const Home = () => {
           <Text className="text-white">Sugerencias</Text>
         </View>
         <FlatList
+          contentContainerStyle={{ gap: 15 }}
           data={practices.data}
           keyExtractor={(practice) => practice.durationMillis}
           renderItem={({ item }) => <PracticeCard practice={item} />}
