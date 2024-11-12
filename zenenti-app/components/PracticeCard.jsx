@@ -1,21 +1,33 @@
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, Pressable } from "react-native";
 import React from "react";
 import frame from "../assets/images/image-card.png";
 import arrow from "../assets/images/arrow-right.png";
+import { createLocalTimeString } from "../util/time";
 
-const PracticeCard = ({ practice }) => {
+const PracticeCard = ({ practice, onPress }) => {
   return (
-    <View className="flex-row mt-5 bg-[#EAEEF6] rounded-lg px-3 py-[10] justify-between ">
-      <Image source={frame} />
-      <View className="ml-10">
-        <Text className="">{practice.name}</Text>
-        <Text className="bg-secondary text-center text-white rounded-full px-1 py-1">
-          {practice.durationMillis}
-        </Text>
-        <Text>{practice.category}</Text>
+    <Pressable
+      className="flex-row bg-[#EAEEF6] rounded-lg px-3 py-3 gap-x-5"
+      onPress={onPress}
+    >
+      <View className="flex justify-center items-center border-2 rounded-2xl border-primary py-4 px-10">
+        <Image className="w-16 h-16" source={frame} />
       </View>
-      <Image source={arrow} className="w-6 h-6 mt-[25]" />
-    </View>
+      <View className="flex-grow">
+        <Text className="font-alegra-medium text-xl">{practice.name}</Text>
+        <View className="bg-secondary rounded-full p-2 self-start">
+          <Text className="font-alegra-medium text-white">
+            {createLocalTimeString(practice.durationMillis)} Min
+          </Text>
+        </View>
+        <Text className="font-alegra-medium">
+          {practice.category} - {practice.type}
+        </Text>
+      </View>
+      <View className="flex justify-center">
+        <Image source={arrow} className="w-6 h-6" />
+      </View>
+    </Pressable>
   );
 };
 
