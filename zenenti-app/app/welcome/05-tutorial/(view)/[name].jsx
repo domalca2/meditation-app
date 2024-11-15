@@ -20,7 +20,7 @@ const Name = () => {
     setSubtitle("");
 
     if (hasNext) {
-      // Nueva ruta para tutorial
+  
       router.push(`/tutorial/${getNextTutorial().name}`);
     } else {
       navigation.navigate("tutorial/index");
