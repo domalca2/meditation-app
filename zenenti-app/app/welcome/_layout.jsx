@@ -5,11 +5,11 @@ const WelcomeLayout = () => {
   return (
     <Stack>
       <Stack.Screen name="01-welcome/index" options={{ title: "Inicio" }} />
-      <Stack.Screen name="02-greeting/index" options={{ title: "Inicio (1)" }} />
+      <Stack.Screen name="02-greeting/index" options={{ title: "Inicio" }} />
       <Stack.Screen name="03-register/index" options={{ title: "Registro" }} />
       <Stack.Screen
         name="04-begin-tutorial/index"
-        options={{ title: "Comienzo tutorial / bienbenida usuario" }}
+        options={{ title: "Comienzo del tutorial" }}
       />
       <Stack.Screen name="05-tutorial/index" options={{ title: "Tutorial" }} />
       <Stack.Screen
