@@ -20,9 +20,9 @@ const Home = () => {
     queryKey: ["practice", "practices"],
   });
 
-  const quotes = useQuery({
-    queryFn: mockQuery("quotes"),
-    queryKey: ["quotes"],
+  const quote = useQuery({
+    queryFn: mockQuery("quotes/0"),
+    queryKey: ["quotes", 0],
   });
 
   const startPractice = (id) => {
@@ -47,9 +47,11 @@ const Home = () => {
             </View>
           </View>
           <View className="flex-grow justify-center items-center">
-            {quotes.isSuccess && (
-              <Text className="font-alegra-medium color-[#626161] text-l w-3/4">
-                {quotes.data[Math.floor(Math.random() * quotes.data.length)]}
+            {quote.isSuccess && (
+              <Text className="flex flex-col font-alegra-medium color-[#626161] text-l w-3/4">
+                <Text>{quote.data.message}</Text>
+                {"\n"}
+                <Text className="font-bold">{quote.data.author}</Text>
               </Text>
             )}
           </View>

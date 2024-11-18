@@ -60,7 +60,13 @@ const mock = {
       },
     ],
   },
-  quotes: ["«Dar no nos empobrece, ni retener nos enriquece.» B.K.S"],
+  quotes: [
+    {
+      id: 0,
+      message: "La paz comienza con una sonrisa.",
+      author: "Thich Nhat Hanh",
+    },
+  ],
 };
 
 /**
