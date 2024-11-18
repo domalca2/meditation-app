@@ -42,12 +42,21 @@ const mock = {
         background: require("../assets/images/practice-background/enfoque.png"),
       },
     ],
-    types: ["Respiración", "Meditación"],
+    types: [
+      {
+        id: 0,
+        title: "Respiración",
+      },
+      {
+        id: 1,
+        title: "Meditación",
+      },
+    ],
     practices: [
       {
         id: 0,
         categoryId: 2,
-        type: ["Meditación"],
+        typeId: 1,
         name: "Intención Positiva",
         durationMillis: 104000,
         level: 1,
@@ -56,7 +65,7 @@ const mock = {
       {
         id: 1,
         categoryId: 0,
-        type: ["Meditación"],
+        typeId: 1,
         name: "Meditación guiada ",
         durationMillis: 61000,
         level: 1,

@@ -22,6 +22,12 @@ const Practice = () => {
     enabled: practice.isSuccess,
   });
 
+  const type = useQuery({
+    queryFn: mockQuery(`practice/types/${practice.data?.typeId}`),
+    queryKey: ["practice", "types", practice.data?.typeId],
+    enabled: practice.isSuccess,
+  });
+
   const goBack = () => {
     router.back();
   };
@@ -42,9 +48,9 @@ const Practice = () => {
                 <Image className="h-10 w-10" source={navigationArrowBack} />
               </Pressable>
             </View>
-            {category.isSuccess && (
+            {category.isSuccess && type.isSuccess && (
               <Text className="flex-grow text-center font-alegra-regular text-2xl">
-                {`${category.data.title} - ${practice.data.type}`}
+                {`${category.data.title} - ${type.data.title}`}
               </Text>
             )}
             <View className="w-1/5" />

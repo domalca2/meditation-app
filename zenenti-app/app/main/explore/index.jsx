@@ -1,15 +1,17 @@
-import { Text, SafeAreaView, View, FlatList } from "react-native";
+import { Text, SafeAreaView, FlatList } from "react-native";
 import { useQuery } from "@tanstack/react-query";
 import { mockQuery } from "../../../mock/mock";
 import { useRouter } from "expo-router";
-import React, { useState } from "react";
+import { useState } from "react";
 
 import CategorySelect from "../../../components/category/CategorySelect";
 import PracticeCard from "../../../components/PracticeCard";
+import PracticeTypeSelect from "../../../components/practice-type/PracticeTypeSelect";
 
 const Explore = () => {
   const router = useRouter();
   const [categoryId, setCategoryId] = useState(0);
+  const [typeId, setTypeId] = useState(0);
 
   const practices = useQuery({
     queryFn: mockQuery("practice/practices"),
@@ -31,16 +33,21 @@ const Explore = () => {
         Explorar
       </Text>
       <CategorySelect
-        className="mb-10"
+        className="mb-5"
         onCategorySelect={(id) => {
           setCategoryId(id);
         }}
+      />
+      <PracticeTypeSelect
+        className="mb-5"
+        onPracticeTypeSelect={(id) => setTypeId(id)}
       />
       {category.isSuccess && (
         <FlatList
           contentContainerStyle={{ gap: 15 }}
           data={practices.data.filter(
-            (practice) => practice.categoryId === categoryId,
+            (practice) =>
+              practice.categoryId === categoryId && practice.typeId === typeId,
           )}
           keyExtractor={(practice) => practice.durationMillis}
           renderItem={({ item }) => (
