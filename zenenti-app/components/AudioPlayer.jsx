@@ -15,8 +15,8 @@ const AudioPlayer = ({
   const [playbackSeconds, setPlaybackSeconds] = useState(0);
   const [playbarLayout, setPlaybarLayout] = useState({});
 
-  const pauseButton = require("../assets/images/pause-button.png");
-  const playButton = require("../assets/images/play-button-small.png");
+  const pauseButton = require("../assets/images/ui/pause-button.png");
+  const playButton = require("../assets/images/ui/play-button-small.png");
 
   const setPlaying = async (play) => {
     if (sound) {

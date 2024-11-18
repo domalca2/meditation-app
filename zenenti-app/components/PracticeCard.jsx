@@ -1,7 +1,7 @@
 import { View, Text, Image, Pressable } from "react-native";
 import React from "react";
 import frame from "../assets/images/image-card.png";
-import arrow from "../assets/images/arrow-right.png";
+import arrow from "../assets/images/ui/arrow-right.png";
 import { createLocalTimeString } from "../util/time";
 import { useQuery } from "@tanstack/react-query";
 import { mockQuery } from "../mock/mock";

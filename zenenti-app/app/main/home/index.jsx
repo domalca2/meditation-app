@@ -6,9 +6,12 @@ import { useRouter } from "expo-router";
 import circle from "../../../assets/images/patata.png";
 import flor from "../../../assets/images/flor-sugerencias.png";
 import PracticeCard from "../../../components/PracticeCard";
+import DurationSorter from "../../../components/DurationSorter";
+import { useEffect, useState } from "react";
 
 const Home = () => {
   const router = useRouter();
+  const [sortOrder, setSortOrder] = useState("descending");
 
   const username = useQuery({
     queryFn: mockQuery("user/name"),
@@ -57,14 +60,28 @@ const Home = () => {
           </View>
         </View>
         <Text className="font-alegra-medium text-2xl">¿Qué necesitas hoy?</Text>
-        <View className="flex bg-primary mt-5 mb-5 flex-row w-[150] p-2 justify-evenly rounded-full">
-          <Image className="w-5 h-5" source={flor} />
-          <Text className="text-white">Sugerencias</Text>
+        <View className="flex flex-row justify-between items-center">
+          <View className="flex bg-primary mt-5 mb-5 flex-row w-[150] p-2 justify-evenly rounded-full">
+            <Image className="w-5 h-5" source={flor} />
+            <Text className="text-white">Sugerencias</Text>
+          </View>
+          <DurationSorter
+            sortOrder={sortOrder}
+            onChangeSortOrder={(order) => {
+              setSortOrder(order);
+            }}
+          />
         </View>
         {practices.isSuccess && (
           <FlatList
             contentContainerStyle={{ gap: 15 }}
-            data={practices.data}
+            data={practices.data.sort((a, b) => {
+              if (sortOrder === "ascending") {
+                return a.durationMillis - b.durationMillis;
+              } else {
+                return b.durationMillis - a.durationMillis;
+              }
+            })}
             keyExtractor={(practice) => practice.durationMillis}
             renderItem={({ item }) => (
               <PracticeCard

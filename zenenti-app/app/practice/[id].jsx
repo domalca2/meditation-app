@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { mockQuery } from "../../mock/mock";
 import AudioPlayer from "../../components/AudioPlayer";
 
-import navigationArrowBack from "../../assets/images/navigation-arrow-back.png";
+import navigationArrowBack from "../../assets/images/ui/navigation-arrow-back.png";
 import iconAudioPlaying from "../../assets/images/icon-audio-playing.png";
 
 const Practice = () => {
