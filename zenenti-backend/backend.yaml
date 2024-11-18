@@ -1,0 +1,12 @@
+openapi: 3.1.0
+info:
+  title: Zenenti API
+  description: Backend REST API for Zenenti Application
+  version: 0.0.1
+paths:
+  /public/user/register:
+    post:
+      summary: Create new user.
+  /private/user:
+    get:
+      summary: Returns user information.
