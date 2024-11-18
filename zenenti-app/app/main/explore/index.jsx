@@ -40,7 +40,7 @@ const Explore = () => {
         <FlatList
           contentContainerStyle={{ gap: 15 }}
           data={practices.data.filter(
-            (practice) => practice.category === category.data.title,
+            (practice) => practice.categoryId === categoryId,
           )}
           keyExtractor={(practice) => practice.durationMillis}
           renderItem={({ item }) => (

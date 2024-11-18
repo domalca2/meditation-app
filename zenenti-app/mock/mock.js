@@ -12,6 +12,7 @@ const mock = {
           primary: require("../assets/images/sentiment-calm-primary.png"),
           secondary: require("../assets/images/sentiment-calm-white.png"),
         },
+        background: require("../assets/images/practice-background/calma.png"),
       },
       {
         id: 1,
@@ -20,6 +21,7 @@ const mock = {
           primary: require("../assets/images/sleep-sounds-primary.png"),
           secondary: require("../assets/images/sleep-sounds-white.png"),
         },
+        background: require("../assets/images/practice-background/dormir.png"),
       },
       {
         id: 2,
@@ -28,6 +30,7 @@ const mock = {
           primary: require("../assets/images/yoga-primary.png"),
           secondary: require("../assets/images/yoga-white.png"),
         },
+        background: require("../assets/images/practice-background/bienestar.png"),
       },
       {
         id: 3,
@@ -36,13 +39,14 @@ const mock = {
           primary: require("../assets/images/focus-primary.png"),
           secondary: require("../assets/images/focus-white.png"),
         },
+        background: require("../assets/images/practice-background/enfoque.png"),
       },
     ],
     types: ["Respiración", "Meditación"],
     practices: [
       {
         id: 0,
-        category: "Bienestar",
+        categoryId: 2,
         type: ["Meditación"],
         name: "Intención Positiva",
         durationMillis: 104000,
@@ -51,7 +55,7 @@ const mock = {
       },
       {
         id: 1,
-        category: "Calma",
+        categoryId: 0,
         type: ["Meditación"],
         name: "Meditación guiada ",
         durationMillis: 61000,

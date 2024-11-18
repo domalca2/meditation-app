@@ -4,7 +4,6 @@ import { useQuery } from "@tanstack/react-query";
 import { mockQuery } from "../../mock/mock";
 import AudioPlayer from "../../components/AudioPlayer";
 
-import practiceBackground from "../../assets/images/practice-background.png";
 import navigationArrowBack from "../../assets/images/navigation-arrow-back.png";
 import iconAudioPlaying from "../../assets/images/icon-audio-playing.png";
 
@@ -17,6 +16,12 @@ const Practice = () => {
     queryKey: ["practice", "practices", id],
   });
 
+  const category = useQuery({
+    queryFn: mockQuery(`practice/categories/${practice.data?.categoryId}`),
+    queryKey: ["practice", "categories", practice.data?.categoryId],
+    enabled: practice.isSuccess,
+  });
+
   const goBack = () => {
     router.back();
   };
@@ -24,7 +29,12 @@ const Practice = () => {
   return (
     <SafeAreaView className="flex-1">
       <View className="w-full h-full relative">
-        <Image className="h-full w-full absolute" source={practiceBackground} />
+        {category.isSuccess && (
+          <Image
+            className="h-full w-full absolute"
+            source={category.data.background}
+          />
+        )}
         <View className="h-full w-full absolute flex py-16 px-5">
           <View className="flex flex-row items-center">
             <View className="w-1/5">
@@ -32,16 +42,14 @@ const Practice = () => {
                 <Image className="h-10 w-10" source={navigationArrowBack} />
               </Pressable>
             </View>
-            {practice.isSuccess && (
+            {category.isSuccess && (
               <Text className="flex-grow text-center font-alegra-regular text-2xl">
-                {`${practice.data.category} - ${practice.data.type}`}
+                {`${category.data.title} - ${practice.data.type}`}
               </Text>
             )}
             <View className="w-1/5" />
           </View>
-          <View className="flex-grow items-center justify-center">
-            <Text className="font-alegra-bold text-3xl">Exhala</Text>
-          </View>
+          <View className="flex-grow"></View>
           <View className="flex flex-row justify-center mb-5">
             <Image className="h-10 w-10" source={iconAudioPlaying} />
           </View>
