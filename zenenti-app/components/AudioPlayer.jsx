@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Audio } from "expo-av";
 import { Image, Pressable, Text, View } from "react-native";
+import { createLocalTimeString } from "../util/time";
 
 const AudioPlayer = ({
   audio,
@@ -16,16 +17,6 @@ const AudioPlayer = ({
 
   const pauseButton = require("../assets/images/pause-button.png");
   const playButton = require("../assets/images/play-button-small.png");
-
-  const createTimeString = (seconds) => {
-    const min = Math.floor(Math.floor(seconds) / 60) || 0;
-    const sec = Math.floor(seconds) % 60 || 0;
-
-    const minString = min.toLocaleString("en-US", { minimumIntegerDigits: 2 });
-    const secString = sec.toLocaleString("en-US", { minimumIntegerDigits: 2 });
-
-    return `${minString}:${secString}`;
-  };
 
   const setPlaying = async (play) => {
     if (sound) {
@@ -170,11 +161,11 @@ const AudioPlayer = ({
       </View>
       <View className="flex flex-row">
         <Text className="font-alegra-medium text-white text-l">
-          {createTimeString(playbackSeconds)}
+          {createLocalTimeString(playbackSeconds * 1000)}
         </Text>
         <Text className="font-alegra-medium text-white text-l"> / </Text>
         <Text className="font-alegra-medium text-white text-l">
-          {createTimeString(audioDuration)}
+          {createLocalTimeString(audioDuration * 1000)}
         </Text>
       </View>
     </View>

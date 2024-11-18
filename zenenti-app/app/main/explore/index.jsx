@@ -1,15 +1,24 @@
-import { Text, SafeAreaView, View } from "react-native";
-import CategorySelect from "../../../components/category/CategorySelect";
+import { Text, SafeAreaView, View, FlatList } from "react-native";
 import { useQuery } from "@tanstack/react-query";
 import { mockQuery } from "../../../mock/mock";
-import Button from "../../../components/Button";
 import { useRouter } from "expo-router";
+import React, { useState } from "react";
+
+import CategorySelect from "../../../components/category/CategorySelect";
+import PracticeCard from "../../../components/PracticeCard";
 
 const Explore = () => {
   const router = useRouter();
+  const [categoryId, setCategoryId] = useState(0);
+
   const practices = useQuery({
     queryFn: mockQuery("practice/practices"),
     queryKey: ["practice", "practices"],
+  });
+
+  const category = useQuery({
+    queryFn: mockQuery(`practice/categories/${categoryId}`),
+    queryKey: ["practice", "categories", categoryId],
   });
 
   const startPractice = (id) => {
@@ -21,19 +30,29 @@ const Explore = () => {
       <Text className="w-full text-center font-alegra-bold text-2xl mb-6">
         Explorar
       </Text>
-      <CategorySelect />
-      <View className="flex flex-col gap-5 py-5">
-        {practices.isSuccess &&
-          practices.data.map((practice) => (
-            <Button
-              key={practice.id}
-              text={practice.name}
+      <CategorySelect
+        className="mb-10"
+        onCategorySelect={(id) => {
+          setCategoryId(id);
+        }}
+      />
+      {category.isSuccess && (
+        <FlatList
+          contentContainerStyle={{ gap: 15 }}
+          data={practices.data.filter(
+            (practice) => practice.category === category.data.title,
+          )}
+          keyExtractor={(practice) => practice.durationMillis}
+          renderItem={({ item }) => (
+            <PracticeCard
+              practice={item}
               onPress={() => {
-                startPractice(practice.id);
+                startPractice(item.id);
               }}
             />
-          ))}
-      </View>
+          )}
+        />
+      )}
     </SafeAreaView>
   );
 };

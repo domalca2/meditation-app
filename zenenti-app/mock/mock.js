@@ -41,6 +41,7 @@ const mock = {
     types: ["Respiración", "Meditación"],
     practices: [
       {
+        id: 0,
         category: "Bienestar",
         type: ["Meditación"],
         name: "Intención Positiva",
@@ -49,6 +50,7 @@ const mock = {
         audio: require("../assets/audio/practice/BI_ME_1-5_N1_Intención positiva.m4a"),
       },
       {
+        id: 1,
         category: "Calma",
         type: ["Meditación"],
         name: "Meditación guiada ",
