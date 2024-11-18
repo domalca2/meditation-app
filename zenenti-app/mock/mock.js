@@ -1,6 +1,7 @@
 const mock = {
   user: {
     name: "Zeny",
+    profilePicture: require("../assets/images/profile-picture.png"),
     finishedTutorial: false,
   },
   practice: {
