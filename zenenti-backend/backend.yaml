@@ -7,6 +7,16 @@ paths:
   /public/user/register:
     post:
       summary: Create new user.
-  /private/user:
+  /public/user/login:
+    post:
+  /private/user/{id}:
     get:
       summary: Returns user information.
+  /private/category/all:
+  /private/category/{id}:
+  /private/practice-type/all:
+  /private/practice-type/{id}:
+  /private/practice/all:
+    get:
+  /private/practice/{id}:
+    get:
