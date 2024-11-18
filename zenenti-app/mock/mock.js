@@ -11,6 +11,7 @@ const mock = {
         icon: {
           primary: require("../assets/images/sentiment-calm-primary.png"),
           secondary: require("../assets/images/sentiment-calm-white.png"),
+          card: require("../assets/images/card-icons/calma.png"),
         },
         background: require("../assets/images/practice-background/calma.png"),
       },
@@ -20,6 +21,7 @@ const mock = {
         icon: {
           primary: require("../assets/images/sleep-sounds-primary.png"),
           secondary: require("../assets/images/sleep-sounds-white.png"),
+          card: require("../assets/images/card-icons/dormir.png"),
         },
         background: require("../assets/images/practice-background/dormir.png"),
       },
@@ -29,6 +31,7 @@ const mock = {
         icon: {
           primary: require("../assets/images/yoga-primary.png"),
           secondary: require("../assets/images/yoga-white.png"),
+          card: require("../assets/images/card-icons/bienestar.png"),
         },
         background: require("../assets/images/practice-background/bienestar.png"),
       },
@@ -38,6 +41,7 @@ const mock = {
         icon: {
           primary: require("../assets/images/focus-primary.png"),
           secondary: require("../assets/images/focus-white.png"),
+          card: require("../assets/images/card-icons/enfoque.png"),
         },
         background: require("../assets/images/practice-background/enfoque.png"),
       },

@@ -3,7 +3,6 @@ import { createRoundedLocalTimeString } from "../util/time";
 import { useQuery } from "@tanstack/react-query";
 import { mockQuery } from "../mock/mock";
 
-import frame from "../assets/images/image-card.png";
 import arrow from "../assets/images/ui/arrow-right.png";
 
 const PracticeCard = ({ practice, onPress }) => {
@@ -23,7 +22,9 @@ const PracticeCard = ({ practice, onPress }) => {
       onPress={onPress}
     >
       <View className="flex justify-center items-center border-2 rounded-2xl border-primary py-4 px-10">
-        <Image className="w-16 h-16" source={frame} />
+        {category.isSuccess && (
+          <Image className="w-14 h-14" source={category.data.icon.card} />
+        )}
       </View>
       <View className="flex-grow">
         <Text className="font-alegra-medium text-xl">{practice.name}</Text>
