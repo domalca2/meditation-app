@@ -40,6 +40,9 @@ const Explore = () => {
           setCategoryId(id);
         }}
       />
+      <Text className="font-alegra-medium text-2xl mb-5">
+        ¿Qué necesitas hoy?
+      </Text>
       <View className="flex flex-row justify-between items-center mb-5">
         <PracticeTypeSelect onPracticeTypeSelect={(id) => setTypeId(id)} />
         <DurationSorter
