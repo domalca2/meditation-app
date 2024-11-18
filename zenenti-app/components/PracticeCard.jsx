@@ -1,10 +1,10 @@
 import { View, Text, Image, Pressable } from "react-native";
-import React from "react";
-import frame from "../assets/images/image-card.png";
-import arrow from "../assets/images/ui/arrow-right.png";
-import { createLocalTimeString } from "../util/time";
+import { createRoundedLocalTimeString } from "../util/time";
 import { useQuery } from "@tanstack/react-query";
 import { mockQuery } from "../mock/mock";
+
+import frame from "../assets/images/image-card.png";
+import arrow from "../assets/images/ui/arrow-right.png";
 
 const PracticeCard = ({ practice, onPress }) => {
   const category = useQuery({
@@ -29,7 +29,7 @@ const PracticeCard = ({ practice, onPress }) => {
         <Text className="font-alegra-medium text-xl">{practice.name}</Text>
         <View className="bg-secondary rounded-full p-2 self-start">
           <Text className="font-alegra-medium text-white">
-            {createLocalTimeString(practice.durationMillis)} Min
+            {createRoundedLocalTimeString(practice.durationMillis)} Min
           </Text>
         </View>
         {category.isSuccess && type.isSuccess && (

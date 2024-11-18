@@ -7,3 +7,9 @@ export function createLocalTimeString(millis) {
 
   return `${minString}:${secString}`;
 }
+
+export function createRoundedLocalTimeString(millis) {
+  const min = Math.round(Math.floor(millis / 1000) / 60) || 0;
+
+  return `${min}`;
+}
