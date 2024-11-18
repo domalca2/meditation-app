@@ -160,11 +160,11 @@ const AudioPlayer = ({
         />
       </View>
       <View className="flex flex-row">
-        <Text className="font-roboto-mono-regular text-white text-l">
+        <Text className="font-alegra-medium text-white text-l">
           {createLocalTimeString(playbackSeconds * 1000)}
         </Text>
-        <Text className="font-roboto-mono-regular text-white text-l"> / </Text>
-        <Text className="font-roboto-mono-regular text-white text-l">
+        <Text className="font-alegra-medium text-white text-l"> / </Text>
+        <Text className="font-alegra-medium text-white text-l">
           {createLocalTimeString(audioDuration * 1000)}
         </Text>
       </View>
