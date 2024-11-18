@@ -1,0 +1,115 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider          = "sqlserver"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+}
+
+model User {
+  user_id            Int                  @id @default(autoincrement())
+  user_name          String
+  email              String
+  age                Int
+  gender             String
+  education          String
+  profession         String
+  country            String
+  UserProgress       UserProgress[]
+  CompletedPractices CompletedPractices[]
+}
+
+model Level {
+  level_id     Int            @id @default(autoincrement())
+  level_name   String
+  min_score    Int
+  max_score    Int
+  UserProgress UserProgress[]
+  Course       Course[]
+}
+
+model UserProgress {
+  progress_id          Int      @id @default(autoincrement())
+  user                 User     @relation(fields: [user_id], references: [user_id])
+  user_id              Int
+  level                Level    @relation(fields: [level_id], references: [level_id])
+  level_id             Int
+  total_score          Int
+  progress_percentage  Decimal
+  global_ranking       Int
+  level_ranking        Int
+  age_category_ranking Int
+  update_date          DateTime
+}
+
+model Course {
+  course_id          Int      @id @default(autoincrement())
+  course_name        String
+  course_description String
+  instructor_name    String
+  duration           Int
+  level              Level    @relation(fields: [level_id], references: [level_id])
+  level_id           Int
+  creation_date      DateTime
+  last_update_date   DateTime
+  course_status      String
+  course_url         String
+}
+
+model Category {
+  category_id          Int        @id @default(autoincrement())
+  category_name        String
+  category_description String
+  image_url            String
+  creation_date        DateTime
+  last_update_date     DateTime
+  Practice             Practice[]
+}
+
+model Duration {
+  duration_id          Int        @id @default(autoincrement())
+  duration_name        String
+  duration_description String
+  creation_date        DateTime
+  last_update_date     DateTime
+  Practice             Practice[]
+}
+
+model PracticeType {
+  practice_type_id          Int        @id @default(autoincrement())
+  practice_type_name        String
+  practice_type_description String
+  creation_date             DateTime
+  last_update_date          DateTime
+  Practice                  Practice[]
+}
+
+model Practice {
+  practice_id        Int                  @id @default(autoincrement())
+  is_game            Boolean
+  category           Category             @relation(fields: [category_id], references: [category_id])
+  category_id        Int
+  practice_type      PracticeType         @relation(fields: [practice_type_id], references: [practice_type_id])
+  practice_type_id   Int
+  duration           Duration             @relation(fields: [duration_id], references: [duration_id])
+  duration_id        Int
+  exact_time         Int
+  practice_level     Int
+  practice_score     Int
+  practice_url       String
+  file_name          String
+  creation_date      DateTime
+  practice_status    String
+  CompletedPractices CompletedPractices[]
+}
+
+model CompletedPractices {
+  practice_log_id Int      @id @default(autoincrement())
+  practice        Practice @relation(fields: [practice_id], references: [practice_id])
+  practice_id     Int
+  user            User     @relation(fields: [user_id], references: [user_id])
+  user_id         Int
+  completion_date DateTime
+}
