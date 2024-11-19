@@ -17,6 +17,8 @@ module.exports = {
         "alegra-medium": ["AlegreyaSans-Medium"],
         "alegra-regular": ["AlegreyaSans-Regular"],
         "alegra-bold": ["AlegreyaSans-Bold"],
+        "montserrat-bold": ["Montserrat-Bold"],
+        "montserrat-medium": ["Montserrat-Medium"],
         "roboto-mono-regular": ["RobotoMono-Regular"],
       },
     },

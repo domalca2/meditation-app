@@ -20,7 +20,6 @@ const Name = () => {
     setSubtitle("");
 
     if (hasNext) {
-  
       router.push(`/05-tutorial/${getNextTutorial().name}`);
     } else {
       navigation.navigate("05-tutorial/index");
@@ -49,13 +48,10 @@ const Name = () => {
   return (
     <SafeAreaView className="bg-primary flex-1 justify-center py-20">
       <View className="flex-1 flex-col items-center">
-        
         <View className="flex flex-row w-full items-center justify-between px-5">
           <Text className="h-full w-1/4" />
           <View className="h-full w-1/2">
-            <Text className="text-center font-alegra-medium text-white text-5xl">
-              {tutorial.title}
-            </Text>
+            <Text className="heading">{tutorial.title}</Text>
           </View>
           <View className="h-full w-1/4">
             <Button
