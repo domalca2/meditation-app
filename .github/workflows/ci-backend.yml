@@ -26,6 +26,12 @@ jobs:
           tenant-id: ${{ secrets.TENANT_ID }}
           subscription-id: ${{ secrets.SUBSCRIPTION_ID }}
 
+      - name: Database Migration
+        run: npx prisma migrate deploy
+        working-directory: ./zenenti-backend
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_CONNECTION_URL }}
+
       - name: Deploy
         uses: Azure/cli@v2
         with:
