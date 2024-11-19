@@ -1,7 +1,7 @@
 import { Router } from "express";
 
-import version from "./version.mjs";
-import user from "./user.mjs";
+import version from "./version.js";
+import user from "./user.js";
 
 const router = Router();
 

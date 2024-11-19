@@ -1,9 +1,11 @@
 {
   "name": "zenenti-backend",
   "version": "0.0.0",
-  "main": "src/server.mjs",
+  "main": "src/server.js",
+  "type": "module",
   "scripts": {
-    "dev": "cross-env PORT=3000 VERSION=development node src/server.mjs",
+    "dev": "cross-env PORT=3000 VERSION=development node src/server.js",
+    "start": "node src/server.js",
     "build": "zip -r dist.zip ."
   },
   "dependencies": {

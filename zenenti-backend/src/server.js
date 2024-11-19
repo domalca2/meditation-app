@@ -1,10 +1,10 @@
 import express from "express";
-import db from "./db/db.mjs";
+import db from "./db/db.js";
 
-import publicRouter from "./public/index.mjs";
-import privateRouter from "./private/index.mjs";
+import publicRouter from "./public/index.js";
+import privateRouter from "./private/index.js";
 
-import debugMiddleware from "./middleware/debug.mjs";
+import debugMiddleware from "./middleware/debug.js";
 
 const app = express();
 const port = process.env.PORT || 3000;

@@ -3,8 +3,8 @@ generator client {
 }
 
 datasource db {
-  provider          = "sqlserver"
-  url               = env("DATABASE_URL")
+  provider = "sqlserver"
+  url      = env("DATABASE_URL")
 }
 
 model User {
@@ -12,6 +12,7 @@ model User {
   name               String
   email              String               @unique
   passwordHash       String
+  joinDate           DateTime
   completedPractices CompletedPractices[]
 }
 

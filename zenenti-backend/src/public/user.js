@@ -1,6 +1,6 @@
 import { Router } from "express";
-import db from "../db/db.mjs";
-import validate from "../middleware/validate.mjs";
+import db from "../db/db.js";
+import validate from "../middleware/validate.js";
 
 const router = Router();
 
