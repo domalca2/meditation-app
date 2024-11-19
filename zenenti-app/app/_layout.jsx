@@ -13,6 +13,8 @@ const RootLayout = () => {
     "AlegreyaSans-Medium": require("../assets/fonts/AlegreyaSans-Medium.ttf"),
     "AlegreyaSans-Regular": require("../assets/fonts/AlegreyaSans-Regular.ttf"),
     "AlegreyaSans-Bold": require("../assets/fonts/AlegreyaSans-Bold.ttf"),
+    "Montserrat-Bold": require("../assets/fonts/Montserrat-Bold.ttf"),
+    "Montserrat-Medium": require("../assets/fonts/Montserrat-Medium.ttf"),
     "RobotoMono-Regular": require("../assets/fonts/RobotoMono-Regular.ttf"),
   });
 

@@ -3,11 +3,23 @@
 @tailwind utilities;
 
 @keyframes animate-soft-pulse {
-  0%   { opacity: 1.0; }
-  50%  { opacity: 0.5; }
-  100% { opacity: 1.0; }
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 .animate-soft-pulse {
   animation: animate-soft-pulse 2.5s ease-in-out infinite;
+}
+
+@layer utilities {
+  .heading {
+    @apply text-4xl font-montserrat-bold text-white text-center;
+  }
 }
