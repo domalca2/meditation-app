@@ -21,16 +21,16 @@ const Name = () => {
 
     if (hasNext) {
   
-      router.push(`/tutorial/${getNextTutorial().name}`);
+      router.push(`/05-tutorial/${getNextTutorial().name}`);
     } else {
-      navigation.navigate("tutorial/index");
+      navigation.navigate("05-tutorial/index");
     }
   };
 
   const stopAndSkipToEnd = async () => {
     setPlayAudio(false);
     setSubtitle("");
-    navigation.navigate("tutorial/index");
+    navigation.navigate("05-tutorial/index");
   };
 
   const onPlaybackProgress = (seconds) => {
