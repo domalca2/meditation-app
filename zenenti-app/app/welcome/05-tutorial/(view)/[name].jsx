@@ -54,7 +54,7 @@ const Name = () => {
   }, [setPlayAudio]);
 
   const handleNextTutorial = () => {
-    translateY.value = withSpring(500, { damping: 25, stiffness: 100 });
+    translateY.value = withSpring(-500, { damping: 25, stiffness: 100 });
 
     setTimeout(() => {
       continueTutorial();
