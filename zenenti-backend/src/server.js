@@ -31,8 +31,4 @@ async function shutdownHandler() {
   process.exit(0);
 }
 
-process.on("SIGINT", shutdownHandler);
-process.on("SIGTERM", shutdownHandler);
-process.on("SIGQUIT", shutdownHandler);
-process.on("SIGKILL", shutdownHandler);
 process.on("exit", shutdownHandler);
