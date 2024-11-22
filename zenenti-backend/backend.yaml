@@ -14,7 +14,7 @@ paths:
   /public/user/register-begin:
     post:
       tags:
-        - authentication
+        - Registration
       summary: Begin registration.
       description: Create a temporary new user with just the user's name (from REGISTRO), which will allow them to complete the registration with email and password after completing tutorial.
       security: [ ] # No auth required
@@ -27,10 +27,22 @@ paths:
                 name:
                   description: Name of the user to create.
                   type: String
+      responses:
+        '200':
+          $ref: '#/components/responses/AuthResponse'
+  /public/user/email-challenge-response/${token}:
+    post:
+      tags:
+        - Registration
+      summary: Email challenge response.
+      description: Verify user email with challenge link sent to email address.
+      security: [ ] # No auth required
+      responses:
+        '200':
   /public/user/login:
     post:
       tags:
-        - authentication
+        - Authentication
       description: Login user.
       security: [ ] # No auth required
       requestBody:
@@ -43,10 +55,13 @@ paths:
                   type: String
                 password:
                   type: String
+      responses:
+        '200':
+          $ref: '#/components/responses/AuthResponse'
   /private/register-end:
     post:
       tags:
-        - authentication
+        - Registration
       summary: End registration.
       description: Finalize registration by providing an email and password to associate with the new account.
       requestBody:
@@ -59,10 +74,13 @@ paths:
                   type: String
                 password:
                   type: String
+      responses:
+        '200':
+          $ref: '#/components/responses/AuthResponse'
   /private/user:
     get:
       tags:
-        - authentication
+        - Authentication
       description: Information about currently logged-in user.
       responses:
         '200':
@@ -71,10 +89,55 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
+  /private/favorite/all:
+    get:
+      tags:
+        - Favorite
+      description: Get all favorites for currently logged-in user.
+      responses:
+        '200':
+          description: Favorites
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Favorite'
+  /private/favorite/new/{practiceId}:
+    post:
+      tags:
+        - Favorite
+      description: Create new favorite
+      parameters:
+        - name: practiceId
+          in: path
+          required: true
+          description: Practice ID
+          schema:
+            type: Number
+      responses:
+        '200':
+          description: Created Favorite.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Favorite'
+  /private/favorite/{id}:
+    delete:
+      tags:
+        - Favorite
+      description: Delete favorite.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Favorite ID
+          schema:
+            type: Number
   /private/category/all:
     get:
       tags:
-        - category
+        - Category
       description: Get all categories.
       responses:
         '200':
@@ -88,7 +151,7 @@ paths:
   /private/category/{id}:
     get:
       tags:
-        - category
+        - Category
       description: Get category by ID.
       parameters:
         - name: id
@@ -107,7 +170,7 @@ paths:
   /private/practice-type/all:
     get:
       tags:
-        - practice-type
+        - PracticeType
       description: Get all practice types.
       responses:
         '200':
@@ -121,7 +184,7 @@ paths:
   /private/practice-type/{id}:
     get:
       tags:
-        - practice-type
+        - PracticeType
       description: Get practice type by ID.
       parameters:
         - name: id
@@ -140,7 +203,7 @@ paths:
   /private/practice/all:
     get:
       tags:
-        - practice
+        - Practice
       description: Get all practices.
       parameters:
         - name: categoryId
@@ -180,7 +243,7 @@ paths:
   /private/practice/{id}:
     get:
       tags:
-        - practice
+        - Practice
       description: Get practice by ID.
       parameters:
         - name: id
@@ -196,13 +259,66 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Practice'
-
+  /private/practice/log:
+    get:
+      tags:
+        - PracticeLog
+      description: Get all completed practices.
+      responses:
+        '200':
+          description: All completed practices.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CompletedPractice'
+    post:
+      tags:
+        - PracticeLog
+      description: Log a completed practice
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                practiceId:
+                  type: Number
+  /private/streak:
+    get:
+      tags:
+        - Streak
+      description: Get all streak days.
+      responses:
+        '200':
+          description: All days that a user has completed at least one practice since their join date.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  schema:
+                    type: Number
+                    description: Date as UNIX timestamp.
 components:
   securitySchemes:
     zen-auth:
       type: http
       scheme: bearer
       bearerFormat: JWT
+
+  responses:
+    AuthResponse:
+      content:
+        description: Bearer token for the authenticated user.
+        application/json:
+          schema:
+            type: object
+            properties:
+              token:
+                schema:
+                  $ref: '#/components/schemas/BearerToken'
 
   schemas:
     User:
@@ -248,3 +364,30 @@ components:
           type: Number
         audioUrl:
           type: String
+    CompletedPractice:
+      type: object
+      properties:
+        id:
+          type: Number
+        practiceId:
+          type: Number
+        userId:
+          type: Number
+        completionDate:
+          type: Number
+          description: Date as UNIX timestamp
+    Favorite:
+      type: object
+      properties:
+        id:
+          type: Number
+        userId:
+          type: Number
+        practiceId:
+          type: Number
+    BearerToken:
+      type: object
+      properties:
+        sub:
+          type: Number
+          description: User ID.

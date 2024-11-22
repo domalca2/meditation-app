@@ -9,7 +9,7 @@
     "build": "zip -r dist.zip ."
   },
   "dependencies": {
-    "@prisma/client": "^5.21.1",
+    "@prisma/client": "^5.22.0",
     "express": "^4.21.1",
     "express-validator": "^7.2.0"
   },
@@ -19,7 +19,7 @@
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
     "prettier": "^3.3.3",
-    "prisma": "^5.21.1"
+    "prisma": "^5.22.0"
   },
   "private": true
 }
