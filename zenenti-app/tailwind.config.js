@@ -12,6 +12,7 @@ module.exports = {
         quaternary: "#f4fb8a",
         disabled: "#4444",
         bgMain: "#fffefc",
+        semitransparent: "rgba(244, 246, 250, 0.65)",
       },
       fontFamily: {
         "alegra-medium": ["AlegreyaSans-Medium"],

@@ -3,7 +3,13 @@ import { Audio } from "expo-av";
 import { Image, Pressable, Text, View } from "react-native";
 import { createLocalTimeString } from "../util/time";
 
-const AudioPlayer = ({ audio, isPrimaryTheme, onProgress, onStateChange, shouldPlay = true }) => {
+const AudioPlayer = ({
+  audio,
+  isPrimaryTheme,
+  onProgress,
+  onStateChange,
+  shouldPlay = true,
+}) => {
   const [state, setState] = useState("idle");
   const [sound, setSound] = useState(null);
   const [audioDuration, setAudioDuration] = useState(0);
@@ -12,12 +18,12 @@ const AudioPlayer = ({ audio, isPrimaryTheme, onProgress, onStateChange, shouldP
 
   // Configuración de imágenes y colores según el tema
   const playButton = isPrimaryTheme
-    ? require("../assets/images/ui/play-button-primary.png")
-    : require("../assets/images/ui/play-button-small.png");
+    ? require("../assets/images/ui/play-button-black.png")
+    : require("../assets/images/ui/play-button-secondary.png");
 
   const pauseButton = isPrimaryTheme
     ? require("../assets/images/ui/pause-button-black.png")
-    : require("../assets/images/ui/pause-button.png");
+    : require("../assets/images/ui/pause-button-secondary.png");
 
   const progressBarColor = isPrimaryTheme ? "bg-black" : "bg-secondary";
   const textColor = isPrimaryTheme ? "text-black" : "text-white"; // Color de texto dinámico
@@ -45,7 +51,9 @@ const AudioPlayer = ({ audio, isPrimaryTheme, onProgress, onStateChange, shouldP
       await sound.pauseAsync();
       const localX = e.nativeEvent.pageX - playbarLayout.x - 15;
       const playbackPercent = localX / playbarLayout.width;
-      const scrollTo = Math.floor(Math.max(0, Math.min(playbackPercent * audioDuration, audioDuration)));
+      const scrollTo = Math.floor(
+        Math.max(0, Math.min(playbackPercent * audioDuration, audioDuration)),
+      );
       setPlaybackSeconds(scrollTo);
     }
   };
@@ -60,12 +68,16 @@ const AudioPlayer = ({ audio, isPrimaryTheme, onProgress, onStateChange, shouldP
   useEffect(() => {
     const loadSound = async () => {
       if (audio) {
-        const { sound } = await Audio.Sound.createAsync(audio, { shouldPlay }, (status) => {
-          setAudioDuration(status.durationMillis / 1000);
-          if (status.isPlaying) {
-            setState("playing");
-          }
-        });
+        const { sound } = await Audio.Sound.createAsync(
+          audio,
+          { shouldPlay },
+          (status) => {
+            setAudioDuration(status.durationMillis / 1000);
+            if (status.isPlaying) {
+              setState("playing");
+            }
+          },
+        );
         setSound(sound);
         setState("loaded");
       } else {
@@ -121,7 +133,10 @@ const AudioPlayer = ({ audio, isPrimaryTheme, onProgress, onStateChange, shouldP
   return (
     <View className="w-full flex-row gap-5 items-center">
       <Pressable onPress={doPlayPause} className="w-10 h-10">
-        <Image className="w-full h-full" source={state === "playing" ? pauseButton : playButton} />
+        <Image
+          className="w-full h-full"
+          source={state === "playing" ? pauseButton : playButton}
+        />
       </Pressable>
       <View
         onTouchStart={handleTouch}
@@ -139,10 +154,13 @@ const AudioPlayer = ({ audio, isPrimaryTheme, onProgress, onStateChange, shouldP
         />
       </View>
       <View className="flex flex-row">
-        <Text className={`font-alegra-medium ${textColor} text-l`}>
+        <Text className={`font-roboto-mono-regular ${textColor} text-l`}>
           {createLocalTimeString(playbackSeconds * 1000)}
         </Text>
-        <Text className={`font-alegra-medium ${textColor} text-l ml-3`}>
+        <Text className={`font-roboto-mono-regular ${textColor} text-l`}>
+          {" / "}
+        </Text>
+        <Text className={`font-roboto-mono-regular ${textColor} text-l`}>
           {createLocalTimeString(audioDuration * 1000)}
         </Text>
       </View>
