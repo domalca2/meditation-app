@@ -3,20 +3,24 @@ import { Audio } from "expo-av";
 import { Image, Pressable, Text, View } from "react-native";
 import { createLocalTimeString } from "../util/time";
 
-const AudioPlayer = ({
-  audio,
-  onProgress,
-  onStateChange,
-  shouldPlay = true,
-}) => {
+const AudioPlayer = ({ audio, isPrimaryTheme, onProgress, onStateChange, shouldPlay = true }) => {
   const [state, setState] = useState("idle");
   const [sound, setSound] = useState(null);
   const [audioDuration, setAudioDuration] = useState(0);
   const [playbackSeconds, setPlaybackSeconds] = useState(0);
   const [playbarLayout, setPlaybarLayout] = useState({});
 
-  const pauseButton = require("../assets/images/ui/pause-button.png");
-  const playButton = require("../assets/images/ui/play-button-small.png");
+  // Configuración de imágenes y colores según el tema
+  const playButton = isPrimaryTheme
+    ? require("../assets/images/ui/play-button-primary.png")
+    : require("../assets/images/ui/play-button-small.png");
+
+  const pauseButton = isPrimaryTheme
+    ? require("../assets/images/ui/pause-button-black.png")
+    : require("../assets/images/ui/pause-button.png");
+
+  const progressBarColor = isPrimaryTheme ? "bg-black" : "bg-secondary";
+  const textColor = isPrimaryTheme ? "text-black" : "text-white"; // Color de texto dinámico
 
   const setPlaying = async (play) => {
     if (sound) {
@@ -38,24 +42,16 @@ const AudioPlayer = ({
   const handleTouch = async (e) => {
     if (sound) {
       e.persist();
-
       await sound.pauseAsync();
-
-      // 15 a magic number for touch width, since react-native doesn't seem to want to give the actual value.
       const localX = e.nativeEvent.pageX - playbarLayout.x - 15;
-
       const playbackPercent = localX / playbarLayout.width;
-      const scrollTo = Math.floor(
-        Math.max(0, Math.min(playbackPercent * audioDuration, audioDuration)),
-      );
-
+      const scrollTo = Math.floor(Math.max(0, Math.min(playbackPercent * audioDuration, audioDuration)));
       setPlaybackSeconds(scrollTo);
     }
   };
 
   const handleTouchEnd = async (e) => {
     e.persist();
-
     await sound.setPositionAsync(playbackSeconds * 1000);
     await sound.playAsync();
   };
@@ -64,17 +60,12 @@ const AudioPlayer = ({
   useEffect(() => {
     const loadSound = async () => {
       if (audio) {
-        const { sound } = await Audio.Sound.createAsync(
-          audio,
-          { shouldPlay },
-          (status) => {
-            setAudioDuration(status.durationMillis / 1000);
-
-            if (status.isPlaying) {
-              setState("playing");
-            }
-          },
-        );
+        const { sound } = await Audio.Sound.createAsync(audio, { shouldPlay }, (status) => {
+          setAudioDuration(status.durationMillis / 1000);
+          if (status.isPlaying) {
+            setState("playing");
+          }
+        });
         setSound(sound);
         setState("loaded");
       } else {
@@ -90,24 +81,16 @@ const AudioPlayer = ({
       if (sound) {
         await sound.unloadAsync();
       }
-
       setState("idle");
     };
 
-    return () => {
-      unloadSound();
-    };
+    return () => unloadSound();
   }, [sound]);
 
-  /*
-   * Workaround for `expo-av` bug which doesn't call onPlaybackStatusUpdate
-   * https://github.com/expo/expo/issues/29044
-   */
   useEffect(() => {
     const update = setInterval(async () => {
       if (sound) {
         const status = await sound.getStatusAsync();
-
         if (status.isPlaying) {
           setPlaybackSeconds(status.positionMillis / 1000);
           setState("playing");
@@ -116,7 +99,6 @@ const AudioPlayer = ({
         }
       }
     }, 100);
-
     return () => clearInterval(update);
   }, [sound]);
 
@@ -139,10 +121,7 @@ const AudioPlayer = ({
   return (
     <View className="w-full flex-row gap-5 items-center">
       <Pressable onPress={doPlayPause} className="w-10 h-10">
-        <Image
-          className="w-full h-full"
-          source={state === "playing" ? pauseButton : playButton}
-        />
+        <Image className="w-full h-full" source={state === "playing" ? pauseButton : playButton} />
       </Pressable>
       <View
         onTouchStart={handleTouch}
@@ -151,20 +130,19 @@ const AudioPlayer = ({
         onLayout={(e) => {
           setPlaybarLayout(e.nativeEvent.layout);
         }}
-        className="h-5 flex-grow rounded-full relative overflow-hidden"
+        className={`h-5 flex-grow rounded-full relative overflow-hidden`}
       >
         <View className="bg-white opacity-15 w-full h-full rounded-full absolute" />
         <View
           style={{ width: `${(playbackSeconds / audioDuration) * 100}%` }}
-          className="bg-secondary h-full rounded-full absolute"
+          className={`${progressBarColor} h-full rounded-full absolute`}
         />
       </View>
       <View className="flex flex-row">
-        <Text className="font-alegra-medium text-white text-l">
+        <Text className={`font-alegra-medium ${textColor} text-l`}>
           {createLocalTimeString(playbackSeconds * 1000)}
         </Text>
-        <Text className="font-alegra-medium text-white text-l"> / </Text>
-        <Text className="font-alegra-medium text-white text-l">
+        <Text className={`font-alegra-medium ${textColor} text-l ml-3`}>
           {createLocalTimeString(audioDuration * 1000)}
         </Text>
       </View>
