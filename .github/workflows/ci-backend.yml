@@ -5,6 +5,7 @@ on:
       - staging
 permissions:
   id-token: write
+  contents: read
 jobs:
   deploy:
     runs-on: ubuntu-24.04
@@ -22,9 +23,15 @@ jobs:
       - name: Azure Login
         uses: Azure/login@v2.2.0
         with:
-          client-id: ${{ secrets.CLIENT_ID }}
-          tenant-id: ${{ secrets.TENANT_ID }}
-          subscription-id: ${{ secrets.SUBSCRIPTION_ID }}
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Database Migration
+        run: npx prisma migrate deploy
+        working-directory: ./zenenti-backend
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_CONNECTION_URL }}
 
       - name: Deploy
         uses: Azure/cli@v2

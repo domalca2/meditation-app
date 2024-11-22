@@ -1,15 +1,28 @@
-import { Text, SafeAreaView, View } from "react-native";
-import CategorySelect from "../../../components/category/CategorySelect";
+import { Text, SafeAreaView, FlatList, View } from "react-native";
 import { useQuery } from "@tanstack/react-query";
 import { mockQuery } from "../../../mock/mock";
-import Button from "../../../components/Button";
 import { useRouter } from "expo-router";
+import { useState } from "react";
+
+import CategorySelect from "../../../components/category/CategorySelect";
+import PracticeCard from "../../../components/PracticeCard";
+import PracticeTypeSelect from "../../../components/practice-type/PracticeTypeSelect";
+import DurationSorter from "../../../components/DurationSorter";
 
 const Explore = () => {
   const router = useRouter();
+  const [categoryId, setCategoryId] = useState(0);
+  const [typeId, setTypeId] = useState(0);
+  const [sortOrder, setSortOrder] = useState("descending");
+
   const practices = useQuery({
     queryFn: mockQuery("practice/practices"),
     queryKey: ["practice", "practices"],
+  });
+
+  const category = useQuery({
+    queryFn: mockQuery(`practice/categories/${categoryId}`),
+    queryKey: ["practice", "categories", categoryId],
   });
 
   const startPractice = (id) => {
@@ -21,19 +34,49 @@ const Explore = () => {
       <Text className="w-full text-center font-alegra-bold text-2xl mb-6">
         Explorar
       </Text>
-      <CategorySelect />
-      <View className="flex flex-col gap-5 py-5">
-        {practices.isSuccess &&
-          practices.data.map((practice) => (
-            <Button
-              key={practice.id}
-              text={practice.name}
+      <CategorySelect
+        className="mb-5"
+        onCategorySelect={(id) => {
+          setCategoryId(id);
+        }}
+      />
+      <Text className="font-alegra-medium text-2xl mb-5">
+        ¿Qué necesitas hoy?
+      </Text>
+      <View className="flex flex-row justify-between items-center mb-5">
+        <PracticeTypeSelect onPracticeTypeSelect={(id) => setTypeId(id)} />
+        <DurationSorter
+          onChangeSortOrder={(order) => setSortOrder(order)}
+          sortOrder={sortOrder}
+        />
+      </View>
+      {category.isSuccess && (
+        <FlatList
+          contentContainerStyle={{ gap: 15 }}
+          data={practices.data
+            .filter(
+              (practice) =>
+                practice.categoryId === categoryId &&
+                practice.typeId === typeId,
+            )
+            .sort((a, b) => {
+              if (sortOrder === "ascending") {
+                return a.durationMillis - b.durationMillis;
+              } else {
+                return b.durationMillis - a.durationMillis;
+              }
+            })}
+          keyExtractor={(practice) => practice.durationMillis}
+          renderItem={({ item }) => (
+            <PracticeCard
+              practice={item}
               onPress={() => {
-                startPractice(practice.id);
+                startPractice(item.id);
               }}
             />
-          ))}
-      </View>
+          )}
+        />
+      )}
     </SafeAreaView>
   );
 };

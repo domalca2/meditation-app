@@ -27,7 +27,7 @@ const Name = () => {
     setSubtitle("");
 
     if (hasNext) {
-      router.push(`/welcome/05-tutorial/${getNextTutorial().name}`);
+      router.push(`/05-tutorial/${getNextTutorial().name}`);
     } else {
       navigation.navigate("05-tutorial/index");
     }
@@ -49,7 +49,6 @@ const Name = () => {
 
   useEffect(() => {
     setPlayAudio(true);
-
     return () => setPlayAudio(false);
   }, [setPlayAudio]);
 
@@ -90,9 +89,7 @@ const Name = () => {
           <View className="flex flex-row w-full items-center justify-between px-5">
             <Text className="h-full w-1/4" />
             <View className="h-full w-1/2">
-              <Text className="text-center font-alegra-medium text-white text-5xl">
-                {tutorial.title}
-              </Text>
+              <Text className="heading">{tutorial.title}</Text>
             </View>
             <View className="h-full w-1/4">
               <Button
@@ -102,9 +99,11 @@ const Name = () => {
               />
             </View>
           </View>
-          <View className="w-full px-5">
-            {subtitle && <MessageBubble text={subtitle} />}
+
+          <View className="flex-1 items-center justify-center my-15">
+            <Pet />
           </View>
+
           <View className="w-full px-5">
             <AudioPlayer
               audio={tutorial.audio}
@@ -112,8 +111,12 @@ const Name = () => {
               onProgress={onPlaybackProgress}
             />
           </View>
-          <Pet />
-          <SlideButton onPress={handleNextTutorial} />
+
+          <View className="w-full px-5">
+            {subtitle && <MessageBubble text={subtitle} />}
+          </View>
+
+          <SlideButton onPress={continueTutorial} />
         </View>
       </Animated.View>
     </SafeAreaView>
