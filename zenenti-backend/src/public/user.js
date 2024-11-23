@@ -1,25 +1,42 @@
 import { Router } from "express";
 import db from "../db/db.js";
 import validate from "../middleware/validate.js";
+import { getSigningKeyPair } from "../secret/provider.js";
+import jwt from "jsonwebtoken";
 
 const router = Router();
 
-const registerSchema = {
-  user_name:  { isString: true },
-  email:      { isEmail: true },
-  age:        { isInt: true },
-  gender:     { isString: true },
-  education:  { isString: true },
-  profession: { isString: true },
-  country:    { isString: true }
+async function generateUserAuthToken(user) {
+  const keyPair = await getSigningKeyPair();
+
+  return jwt.sign({}, keyPair.privateKey, {
+    algorithm: "ES384",
+    audience: "zenenti.com",
+    issuer: "accounts.zenenti.com",
+    subject: `${user.id}`,
+    expiresIn: "30 days",
+  });
+}
+
+const registerBeginSchema = {
+  name: { isString: true },
 };
 
-router.post("/register", validate(registerSchema), async (req, res) => {
-  const user = await db.user.create({
-    data: req.body
-  });
+router.post(
+  "/register-begin",
+  validate(registerBeginSchema),
+  async (req, res) => {
+    const user = await db.user.create({
+      data: {
+        name: req.body.name,
+        joinDate: new Date(),
+      },
+    });
 
-  res.json(user);
-});
+    const token = await generateUserAuthToken(user);
+
+    res.json({ token });
+  },
+);
 
 export default router;

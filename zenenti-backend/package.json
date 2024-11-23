@@ -1,17 +1,20 @@
 {
   "name": "zenenti-backend",
-  "version": "0.0.0",
+  "version": "1.0.0-alpha",
   "main": "src/server.js",
   "type": "module",
   "scripts": {
-    "dev": "cross-env PORT=3000 VERSION=development node src/server.js",
-    "start": "node src/server.js",
+    "dev": "cross-env PORT=3000 MODE=development node src/server.js",
+    "start": "cross-env MODE=production node src/server.js",
     "build": "zip -r dist.zip ."
   },
   "dependencies": {
     "@prisma/client": "^5.22.0",
     "express": "^4.21.1",
-    "express-validator": "^7.2.0"
+    "express-validator": "^7.2.0",
+    "jsonwebtoken": "^9.0.2",
+    "passport": "^0.7.0",
+    "passport-jwt": "^4.0.1"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
