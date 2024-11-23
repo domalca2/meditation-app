@@ -10,12 +10,19 @@ datasource db {
 model User {
   id                 Int                 @id @default(autoincrement())
   name               String
-  email              String?             @unique // Email and passwordHash are optional, because they aren't added until register-end.
-  emailVerified      Boolean             @default(false)
+  email              Email?              @relation(fields: [emailId], references: [id])
+  emailId            Int?
   passwordHash       String?
   joinDate           DateTime
   completedPractices CompletedPractice[]
   favorites          Favorite[]
+}
+
+model Email {
+  id       Int     @id @default(autoincrement())
+  address  String  @unique
+  verified Boolean @default(false)
+  user     User[]
 }
 
 model Category {
