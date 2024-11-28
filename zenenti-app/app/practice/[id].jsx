@@ -1,37 +1,36 @@
-import { useState } from "react"; 
-import { useLocalSearchParams, useRouter } from "expo-router"; 
-import { Image, SafeAreaView, View, Text, Pressable } from "react-native"; 
-import { useQuery } from "@tanstack/react-query"; 
-import { mockQuery } from "../../mock/mock"; 
+import { useState } from "react";
+import { useLocalSearchParams, useRouter } from "expo-router";
+import { Image, SafeAreaView, View, Text, Pressable } from "react-native";
+import { useQuery } from "@tanstack/react-query";
+import { mockQuery } from "../../mock/mock";
 import AudioPlayer from "../../components/AudioPlayer";
 
-import navigationArrowBack from "../../assets/images/ui/navigation-arrow-back.png"; 
+import navigationArrowBack from "../../assets/images/ui/navigation-arrow-back.png";
 import iconAudioPlaying from "../../assets/images/icon-audio-playing.png";
 
-const Practice = () => { 
-  const router = useRouter(); 
-  const { id } = useLocalSearchParams(); 
-  const [isPrimaryTheme, setIsPrimaryTheme] = useState(true); 
+const Practice = () => {
+  const router = useRouter();
+  const { id } = useLocalSearchParams();
 
-  const practice = useQuery({ 
-    queryFn: mockQuery(`practice/practices/${id}`), 
-    queryKey: ["practice", "practices", id], 
+  const practice = useQuery({
+    queryFn: mockQuery(`practice/practices/${id}`),
+    queryKey: ["practice", "practices", id],
   });
 
-  const category = useQuery({ 
-    queryFn: mockQuery(`practice/categories/${practice.data?.categoryId}`), 
-    queryKey: ["practice", "categories", practice.data?.categoryId], 
-    enabled: practice.isSuccess, 
+  const category = useQuery({
+    queryFn: mockQuery(`practice/categories/${practice.data?.categoryId}`),
+    queryKey: ["practice", "categories", practice.data?.categoryId],
+    enabled: practice.isSuccess,
   });
 
-  const type = useQuery({ 
-    queryFn: mockQuery(`practice/types/${practice.data?.typeId}`), 
-    queryKey: ["practice", "types", practice.data?.typeId], 
-    enabled: practice.isSuccess, 
+  const type = useQuery({
+    queryFn: mockQuery(`practice/types/${practice.data?.typeId}`),
+    queryKey: ["practice", "types", practice.data?.typeId],
+    enabled: practice.isSuccess,
   });
 
-  const goBack = () => { 
-    router.back(); 
+  const goBack = () => {
+    router.back();
   };
 
   return (
@@ -61,22 +60,10 @@ const Practice = () => {
           <View className="flex flex-row justify-center mb-5">
             <Image className="h-10 w-10" source={iconAudioPlaying} />
           </View>
-          <View className="flex items-center justify-center">
-            {/* Fondo con opacidad solo afecta al contenedor del fondo */}
-            <View className="bg-white rounded-lg opacity-65 w-[355px] h-[93px] px-5 py-2 flex items-center justify-center">
-              {/* Este contenedor tiene la opacidad */}
-            </View>
-
-            {/* Reproductor de audio colocado encima, sin ser afectado por la opacidad */}
-            <View className="absolute top-0 left-0 w-[355px] h-[93px] px-3 py-2 flex items-center justify-center">
-              {/* Añadimos padding a la vista que contiene el reproductor */}
-              {practice.isSuccess && (
-                <AudioPlayer
-                  audio={practice.data.audio}
-                  isPrimaryTheme={isPrimaryTheme} // Pasar el tema primario aquí
-                />
-              )}
-            </View>
+          <View className="flex items-center justify-center px-2 py-10 rounded-xl bg-semitransparent">
+            {practice.isSuccess && (
+              <AudioPlayer audio={practice.data.audio} isPrimaryTheme={true} />
+            )}
           </View>
         </View>
       </View>
