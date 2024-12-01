@@ -1,3 +1,4 @@
+// Create transition
 import { Text, SafeAreaView, View } from "react-native";
 import useTutorial from "../../../../hooks/useTutorial";
 import Pet from "../../../../components/Pet";
@@ -7,6 +8,11 @@ import { useEffect, useState } from "react";
 import MessageBubble from "../../../../components/MessageBubble";
 import Button from "../../../../components/Button";
 import AudioPlayer from "../../../../components/AudioPlayer";
+import Animated, {
+  withSpring,
+  useSharedValue,
+  useAnimatedStyle,
+} from "react-native-reanimated";
 
 const Name = () => {
   const router = useRouter();
@@ -14,6 +20,7 @@ const Name = () => {
   const { tutorial, hasNext, getNextTutorial } = useTutorial();
   const [playAudio, setPlayAudio] = useState(false);
   const [subtitle, setSubtitle] = useState("");
+  const translateY = useSharedValue(0);
 
   const continueTutorial = async () => {
     setPlayAudio(false);
@@ -45,41 +52,73 @@ const Name = () => {
     return () => setPlayAudio(false);
   }, [setPlayAudio]);
 
+  const handleNextTutorial = () => {
+    translateY.value = withSpring(-500, { damping: 25, stiffness: 100 });
+
+    setTimeout(() => {
+      continueTutorial();
+    }, 300);
+  };
+
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ translateY: translateY.value }],
+    };
+  });
+
+  useEffect(() => {
+    const unsubscribeFocus = navigation.addListener("focus", () => {
+      translateY.value = 0; 
+    });
+  
+    const unsubscribeBlur = navigation.addListener("blur", () => {
+      translateY.value = 0; 
+    });
+  
+    return () => {
+      unsubscribeFocus();
+      unsubscribeBlur();
+    };
+  }, [navigation]);
+  
+
   return (
     <SafeAreaView className="bg-primary flex-1 justify-center py-20">
-      <View className="flex-1 flex-col items-center">
-        <View className="flex flex-row w-full items-center justify-between px-5">
-          <Text className="h-full w-1/4" />
-          <View className="h-full w-1/2">
-            <Text className="heading">{tutorial.title}</Text>
+      <Animated.View style={[{ flex: 3 }, animatedStyle]}>
+        <View className="flex-1 flex-col items-center">
+          <View className="flex flex-row w-full items-center justify-between px-5">
+            <Text className="h-full w-1/4" />
+            <View className="h-full w-1/2">
+              <Text className="heading">{tutorial.title}</Text>
+            </View>
+            <View className="h-full w-1/4">
+              <Button
+                text="Omitir"
+                onPress={stopAndSkipToEnd}
+                styleType="secondary"
+              />
+            </View>
           </View>
-          <View className="h-full w-1/4">
-            <Button
-              text="Omitir"
-              onPress={stopAndSkipToEnd}
-              styleType="secondary"
+
+          <View className="flex-1 items-center justify-center my-15">
+            <Pet />
+          </View>
+
+          <View className="w-full px-5">
+            <AudioPlayer
+              audio={tutorial.audio}
+              shouldPlay={playAudio}
+              onProgress={onPlaybackProgress}
             />
           </View>
-        </View>
 
-        <View className="flex-1 items-center justify-center my-15">
-          <Pet />
-        </View>
+          <View className="w-full px-5">
+            {subtitle && <MessageBubble text={subtitle} />}
+          </View>
 
-        <View className="w-full px-5">
-          <AudioPlayer
-            audio={tutorial.audio}
-            shouldPlay={playAudio}
-            onProgress={onPlaybackProgress}
-          />
+          <SlideButton onPress={continueTutorial} />
         </View>
-
-        <View className="w-full px-5">
-          {subtitle && <MessageBubble text={subtitle} />}
-        </View>
-
-        <SlideButton onPress={continueTutorial} />
-      </View>
+      </Animated.View>
     </SafeAreaView>
   );
 };
