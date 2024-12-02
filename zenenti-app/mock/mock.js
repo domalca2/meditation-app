@@ -1,6 +1,7 @@
 const mock = {
   user: {
     name: "Zeny",
+    profilePicture: require("../assets/images/profile-picture.png"),
     finishedTutorial: false,
   },
   practice: {
@@ -11,7 +12,9 @@ const mock = {
         icon: {
           primary: require("../assets/images/sentiment-calm-primary.png"),
           secondary: require("../assets/images/sentiment-calm-white.png"),
+          card: require("../assets/images/card-icons/calma.png"),
         },
+        background: require("../assets/images/practice-background/calma.png"),
       },
       {
         id: 1,
@@ -19,7 +22,9 @@ const mock = {
         icon: {
           primary: require("../assets/images/sleep-sounds-primary.png"),
           secondary: require("../assets/images/sleep-sounds-white.png"),
+          card: require("../assets/images/card-icons/dormir.png"),
         },
+        background: require("../assets/images/practice-background/dormir.png"),
       },
       {
         id: 2,
@@ -27,7 +32,9 @@ const mock = {
         icon: {
           primary: require("../assets/images/yoga-primary.png"),
           secondary: require("../assets/images/yoga-white.png"),
+          card: require("../assets/images/card-icons/bienestar.png"),
         },
+        background: require("../assets/images/practice-background/bienestar.png"),
       },
       {
         id: 3,
@@ -35,30 +42,49 @@ const mock = {
         icon: {
           primary: require("../assets/images/focus-primary.png"),
           secondary: require("../assets/images/focus-white.png"),
+          card: require("../assets/images/card-icons/enfoque.png"),
         },
+        background: require("../assets/images/practice-background/enfoque.png"),
       },
     ],
-    types: ["Respiración", "Meditación"],
+    types: [
+      {
+        id: 0,
+        title: "Respiración",
+      },
+      {
+        id: 1,
+        title: "Meditación",
+      },
+    ],
     practices: [
       {
-        category: "Bienestar",
-        type: ["Meditación"],
+        id: 0,
+        categoryId: 2,
+        typeId: 1,
         name: "Intención Positiva",
         durationMillis: 104000,
         level: 1,
         audio: require("../assets/audio/practice/BI_ME_1-5_N1_Intención positiva.m4a"),
       },
       {
-        category: "Calma",
-        type: ["Meditación"],
-        name: "Meditación guiada de un minuto para la calma",
+        id: 1,
+        categoryId: 0,
+        typeId: 1,
+        name: "Meditación guiada ",
         durationMillis: 61000,
         level: 1,
         audio: require("../assets/audio/practice/CA_ME_1-5_N1_Meditación guiada de un minuto para la calma.mp4"),
       },
     ],
   },
-  quotes: ["«Dar no nos empobrece, ni retener nos enriquece.» B.K.S"],
+  quotes: [
+    {
+      id: 0,
+      message: "La paz comienza con una sonrisa.",
+      author: "Thich Nhat Hanh",
+    },
+  ],
 };
 
 /**

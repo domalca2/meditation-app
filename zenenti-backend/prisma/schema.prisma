@@ -1,0 +1,71 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlserver"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                 Int                 @id @default(autoincrement())
+  name               String
+  email              Email?              @relation(fields: [emailId], references: [id])
+  emailId            Int?
+  passwordHash       String?
+  joinDate           DateTime
+  completedPractices CompletedPractice[]
+  favorites          Favorite[]
+}
+
+model Email {
+  id       Int     @id @default(autoincrement())
+  address  String  @unique
+  verified Boolean @default(false)
+  user     User[]
+}
+
+model Category {
+  id               Int        @id @default(autoincrement())
+  title            String
+  iconPrimaryUrl   String
+  iconSecondaryUrl String
+  iconCardUrl      String
+  backgroundUrl    String
+  practices        Practice[]
+}
+
+model PracticeType {
+  id        Int        @id @default(autoincrement())
+  title     String
+  practices Practice[]
+}
+
+model Practice {
+  id                 Int                 @id @default(autoincrement())
+  category           Category            @relation(fields: [categoryId], references: [id])
+  categoryId         Int
+  practiceType       PracticeType        @relation(fields: [practiceTypeId], references: [id])
+  practiceTypeId     Int
+  durationMillis     Int
+  audioUrl           String
+  completedPractices CompletedPractice[]
+  favorites          Favorite[]
+}
+
+model CompletedPractice {
+  id             Int      @id @default(autoincrement())
+  practice       Practice @relation(fields: [practiceId], references: [id])
+  practiceId     Int
+  user           User     @relation(fields: [userId], references: [id])
+  userId         Int
+  completionDate DateTime
+}
+
+model Favorite {
+  id         Int      @id @default(autoincrement())
+  user       User     @relation(fields: [userId], references: [id])
+  userId     Int
+  practice   Practice @relation(fields: [practiceId], references: [id])
+  practiceId Int
+}

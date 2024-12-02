@@ -1,11 +1,11 @@
 import { Router } from "express";
 
-import version from "./version.mjs";
-import user from "./user.mjs";
+import info from "./info.js";
+import user from "./user.js";
 
 const router = Router();
 
-router.use("/version", version);
+router.use("/info", info);
 router.use("/user", user);
 
 export default router;

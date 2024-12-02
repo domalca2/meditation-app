@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { mockQuery } from "../../mock/mock";
 import { useState } from "react";
 
-const CategorySelect = ({ onCategorySelect }) => {
+const CategorySelect = ({ className, onCategorySelect }) => {
   const [selectedId, setSelectedId] = useState(0);
   const categories = useQuery({
     queryFn: mockQuery("practice/categories"),
@@ -16,7 +16,9 @@ const CategorySelect = ({ onCategorySelect }) => {
   }
 
   return (
-    <View className="flex flex-row justify-between items-center w-full">
+    <View
+      className={`${className} flex flex-row justify-between items-center w-full`}
+    >
       {categories.data.map((category) => (
         <CategoryButton
           key={category.id}

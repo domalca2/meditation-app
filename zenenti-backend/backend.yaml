@@ -1,0 +1,393 @@
+openapi: 3.1.0
+info:
+  title: Zenenti API
+  description: Backend REST API for Zenenti Application.
+  version: 1.0.0
+
+servers:
+  - url: https://api.zenenti.es/v1
+
+security:
+  - zen-auth: []
+
+paths:
+  /public/user/register-begin:
+    post:
+      tags:
+        - Registration
+      summary: Begin registration.
+      description: Create a temporary new user with just the user's name (from REGISTRO), which will allow them to complete the registration with email and password after completing tutorial.
+      security: [ ] # No auth required
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  description: Name of the user to create.
+                  type: String
+      responses:
+        '200':
+          $ref: '#/components/responses/AuthResponse'
+  /public/user/email-challenge-response/${token}:
+    post:
+      tags:
+        - Registration
+      summary: Email challenge response.
+      description: Verify user email with challenge link sent to email address.
+      security: [ ] # No auth required
+      responses:
+        '200':
+  /public/user/login:
+    post:
+      tags:
+        - Authentication
+      description: Login user.
+      security: [ ] # No auth required
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: String
+                password:
+                  type: String
+      responses:
+        '200':
+          $ref: '#/components/responses/AuthResponse'
+  /private/register-end:
+    post:
+      tags:
+        - Registration
+      summary: End registration.
+      description: Finalize registration by providing an email and password to associate with the new account.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: String
+                password:
+                  type: String
+      responses:
+        '200':
+          $ref: '#/components/responses/AuthResponse'
+  /private/user:
+    get:
+      tags:
+        - Authentication
+      description: Information about currently logged-in user.
+      responses:
+        '200':
+          description: User
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+  /private/favorite/all:
+    get:
+      tags:
+        - Favorite
+      description: Get all favorites for currently logged-in user.
+      responses:
+        '200':
+          description: Favorites
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Favorite'
+  /private/favorite/new/{practiceId}:
+    post:
+      tags:
+        - Favorite
+      description: Create new favorite
+      parameters:
+        - name: practiceId
+          in: path
+          required: true
+          description: Practice ID
+          schema:
+            type: Number
+      responses:
+        '200':
+          description: Created Favorite.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Favorite'
+  /private/favorite/{id}:
+    delete:
+      tags:
+        - Favorite
+      description: Delete favorite.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Favorite ID
+          schema:
+            type: Number
+  /private/category/all:
+    get:
+      tags:
+        - Category
+      description: Get all categories.
+      responses:
+        '200':
+          description: Category List
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Category'
+  /private/category/{id}:
+    get:
+      tags:
+        - Category
+      description: Get category by ID.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Category ID.
+          schema:
+            type: Number
+      responses:
+        '200':
+          description: Category
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+  /private/practice-type/all:
+    get:
+      tags:
+        - PracticeType
+      description: Get all practice types.
+      responses:
+        '200':
+          description: Practice Type List
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PracticeType'
+  /private/practice-type/{id}:
+    get:
+      tags:
+        - PracticeType
+      description: Get practice type by ID.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Practice Type ID.
+          schema:
+            type: Number
+      responses:
+        '200':
+          description: Practice Type
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PracticeType'
+  /private/practice/all:
+    get:
+      tags:
+        - Practice
+      description: Get all practices.
+      parameters:
+        - name: categoryId
+          in: query
+          required: false
+          description: Category ID to sort by.
+          schema:
+            type: Number
+        - name: practiceTypeId
+          in: query
+          required: false
+          description: Practice Type ID to sort by.
+          schema:
+            type: Number
+        - name: order
+          in: query
+          required: false
+          description: Duration sort order.
+          schema:
+            type: String
+            enum: [ascending, descending]
+        - name: limit
+          in: query
+          required: false
+          description: Limit of practices to return.
+          schema:
+            type: Number
+      responses:
+        '200':
+          description: Practice List
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Practice'
+  /private/practice/{id}:
+    get:
+      tags:
+        - Practice
+      description: Get practice by ID.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Practice ID.
+          schema:
+            type: Number
+      responses:
+        '200':
+          description: Practice
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Practice'
+  /private/practice/log:
+    get:
+      tags:
+        - PracticeLog
+      description: Get all completed practices.
+      responses:
+        '200':
+          description: All completed practices.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CompletedPractice'
+    post:
+      tags:
+        - PracticeLog
+      description: Log a completed practice
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                practiceId:
+                  type: Number
+  /private/streak:
+    get:
+      tags:
+        - Streak
+      description: Get all streak days.
+      responses:
+        '200':
+          description: All days that a user has completed at least one practice since their join date.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  schema:
+                    type: Number
+                    description: Date as UNIX timestamp.
+components:
+  securitySchemes:
+    zen-auth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  responses:
+    AuthResponse:
+      content:
+        description: Bearer token for the authenticated user.
+        application/json:
+          schema:
+            type: object
+            properties:
+              token:
+                schema:
+                  $ref: '#/components/schemas/BearerToken'
+
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: Number
+        name:
+          type: String
+          description: User's first name.
+        email:
+          type: String
+    Category:
+      type: object
+      properties:
+        id:
+          type: Number
+        title:
+          type: String
+        iconPrimaryUrl:
+          type: String
+        iconSecondaryUrl:
+          type: String
+        backgroundUrl:
+          type: String
+    PracticeType:
+      type: object
+      properties:
+        id:
+          type: Number
+        title:
+          type: String
+    Practice:
+      type: object
+      properties:
+        id:
+          type: Number
+        categoryId:
+          type: Number
+        practiceTypeId:
+          type: Number
+        durationMillis:
+          type: Number
+        audioUrl:
+          type: String
+    CompletedPractice:
+      type: object
+      properties:
+        id:
+          type: Number
+        practiceId:
+          type: Number
+        userId:
+          type: Number
+        completionDate:
+          type: Number
+          description: Date as UNIX timestamp
+    Favorite:
+      type: object
+      properties:
+        id:
+          type: Number
+        userId:
+          type: Number
+        practiceId:
+          type: Number
+    BearerToken:
+      type: object
+      properties:
+        sub:
+          type: Number
+          description: User ID.
