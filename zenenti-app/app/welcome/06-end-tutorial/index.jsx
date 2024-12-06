@@ -4,7 +4,7 @@ import Pet from "../../../components/Pet";
 import Button from "../../../components/Button";
 import { useRouter } from "expo-router";
 import { useMutation } from "@tanstack/react-query";
-import { mockMutation } from "../../../mock/mock";
+import { mockMutation } from "../../../query/mock";
 import { queryClient } from "../../../query/query";
 
 const EndTutorial = () => {
