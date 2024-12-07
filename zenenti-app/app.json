@@ -24,6 +24,12 @@
       "package": "com.inspiranzaorg.zenentiapp",
       "softwareKeyboardLayoutMode": "pan"
     },
+    "androidStatusBar": {
+      "backgroundColor": "#ffffff",
+      "barStyle": "dark-content",
+      "translucent": true,
+      "hidden": false
+    },
     "web": {
       "favicon": "./assets/favicon.png"
     },
