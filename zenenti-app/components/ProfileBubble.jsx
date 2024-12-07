@@ -1,6 +1,6 @@
 import { Text, Image, View } from "react-native";
 import { useQuery } from "@tanstack/react-query";
-import { mockQuery } from "../mock/mock";
+import { mockQuery } from "../query/mock";
 
 const ProfileBubble = () => {
   const user = useQuery({

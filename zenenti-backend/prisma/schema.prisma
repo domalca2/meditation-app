@@ -27,7 +27,7 @@ model Email {
 
 model Category {
   id               Int        @id @default(autoincrement())
-  title            String
+  title            String     @unique
   iconPrimaryUrl   String
   iconSecondaryUrl String
   iconCardUrl      String
@@ -37,12 +37,13 @@ model Category {
 
 model PracticeType {
   id        Int        @id @default(autoincrement())
-  title     String
+  title     String     @unique
   practices Practice[]
 }
 
 model Practice {
   id                 Int                 @id @default(autoincrement())
+  name               String              @unique
   category           Category            @relation(fields: [categoryId], references: [id])
   categoryId         Int
   practiceType       PracticeType        @relation(fields: [practiceTypeId], references: [id])

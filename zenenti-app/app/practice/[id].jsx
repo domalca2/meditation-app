@@ -1,8 +1,7 @@
-import { useState } from "react";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { Image, SafeAreaView, View, Text, Pressable } from "react-native";
 import { useQuery } from "@tanstack/react-query";
-import { mockQuery } from "../../mock/mock";
+import { mockQuery } from "../../query/mock";
 import AudioPlayer from "../../components/AudioPlayer";
 
 import navigationArrowBack from "../../assets/images/ui/navigation-arrow-back.png";

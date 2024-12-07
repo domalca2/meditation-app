@@ -2,7 +2,7 @@ import { Image, SafeAreaView, View } from "react-native";
 import { router } from "expo-router";
 import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { mockQuery } from "../../mock/mock";
+import { mockQuery } from "../../query/mock";
 
 const SplashScreen = () => {
   const user = useQuery({

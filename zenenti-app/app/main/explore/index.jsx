@@ -1,6 +1,6 @@
 import { Text, SafeAreaView, FlatList, View } from "react-native";
 import { useQuery } from "@tanstack/react-query";
-import { mockQuery } from "../../../mock/mock";
+import { mockQuery } from "../../../query/mock";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 

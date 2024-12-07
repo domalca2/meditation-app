@@ -1,6 +1,6 @@
 import { SafeAreaView, Text, View } from "react-native";
 import { useQuery } from "@tanstack/react-query";
-import { mockQuery } from "../../../mock/mock";
+import { mockQuery } from "../../../query/mock";
 import ProfileBubble from "../../../components/ProfileBubble";
 
 const Profile = () => {

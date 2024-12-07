@@ -1,7 +1,7 @@
 import { View, Text, Image, Pressable } from "react-native";
 import { createRoundedLocalTimeString } from "../util/time";
 import { useQuery } from "@tanstack/react-query";
-import { mockQuery } from "../mock/mock";
+import { mockQuery } from "../query/mock";
 
 import arrow from "../assets/images/ui/arrow-right.png";
 

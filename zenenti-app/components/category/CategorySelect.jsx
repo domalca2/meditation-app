@@ -1,7 +1,7 @@
 import { View } from "react-native";
 import CategoryButton from "./CategoryButton";
 import { useQuery } from "@tanstack/react-query";
-import { mockQuery } from "../../mock/mock";
+import { mockQuery } from "../../query/mock";
 import { useState } from "react";
 
 const CategorySelect = ({ className, onCategorySelect }) => {

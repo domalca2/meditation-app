@@ -5,23 +5,23 @@ import TextInput from "../../../components/TextInput";
 import { router } from "expo-router";
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
-import { mockMutation } from "../../../mock/mock";
-import { queryClient } from "../../../query/query";
+import { queryClient, createMutation } from "../../../query/query";
+import * as SecureStore from "expo-secure-store";
 
 const RegisterScreen = () => {
-  const [username, setUsername] = useState("");
+  const [name, setName] = useState("");
 
-  const usernameMutation = useMutation({
-    mutationFn: mockMutation("user/name"),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["user", "name"] });
+  const registerBegin = useMutation({
+    mutationFn: createMutation("/public/user/register-begin"),
+    onSuccess: async (res) => {
+      await SecureStore.setItemAsync("zenenti-auth-token", res.token);
+      await queryClient.invalidateQueries({ queryKey: ["user"] });
+      router.push("/welcome/04-begin-tutorial");
     },
   });
 
-  const handleContinue = async () => {
-    await usernameMutation.mutate(username);
-
-    router.push("/welcome/04-begin-tutorial");
+  const handleContinue = () => {
+    registerBegin.mutate({ name });
   };
 
   return (
@@ -37,7 +37,7 @@ const RegisterScreen = () => {
         </View>
         <TextInput
           onChangeText={(text) => {
-            setUsername(text);
+            setName(text);
           }}
           onSubmitEditing={handleContinue}
           placeholder={"Escribe tu nombre"}
@@ -46,7 +46,7 @@ const RegisterScreen = () => {
         <Button
           text={"Continuar"}
           onPress={handleContinue}
-          enabled={username && username.length > 0}
+          enabled={name && name.length > 0}
         />
       </View>
     </SafeAreaView>

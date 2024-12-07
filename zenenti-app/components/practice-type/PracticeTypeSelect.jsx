@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { mockQuery } from "../../mock/mock";
+import { mockQuery } from "../../query/mock";
 import { FlatList, View } from "react-native";
 import PracticeTypeButton from "./PracticeTypeButton";
 import { useState } from "react";
