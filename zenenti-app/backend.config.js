@@ -8,12 +8,18 @@ const development = {
   server: `http://${getDevServerURL()}:3000`,
 };
 
-const production = {
-  server: "https://api.zenenti.es",
+const staging = {
+  server:
+    "https://devzenentiwebapp-g2h6athgfkgefdbg.spaincentral-01.azurewebsites.net",
 };
 
-const config = process.env.BACKEND_ENV === "prod" ? production : development;
+const production = {
+  server:
+    "https://devzenentiwebapp-g2h6athgfkgefdbg.spaincentral-01.azurewebsites.net",
+};
 
 export default {
-  ...config,
+  ...(process.env.BACKEND_ENV === "production" ? production : {}),
+  ...(process.env.BACKEND_ENV === "staging" ? staging : {}),
+  ...(process.env.BACKEND_ENV === "development" ? development : {}),
 };
