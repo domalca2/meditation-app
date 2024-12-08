@@ -5,6 +5,10 @@ import passport from "passport";
 import db from "../db/db.js";
 
 import user from "./user.js";
+import practice from "./practice.js";
+import category from "./category.js";
+import practiceType from "./practice-type.js";
+import asset from "./asset.js";
 
 const strategyOptions = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -34,5 +38,9 @@ const router = Router();
 
 router.use(passport.authenticate("jwt", { session: false }));
 router.use("/user", user);
+router.use("/practice", practice);
+router.use("/category", category);
+router.use("/practice-type", practiceType);
+router.use("/asset", asset);
 
 export default router;

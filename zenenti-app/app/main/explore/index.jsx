@@ -1,8 +1,8 @@
 import { Text, SafeAreaView, FlatList, View } from "react-native";
 import { useQuery } from "@tanstack/react-query";
-import { mockQuery } from "../../../query/mock";
 import { useRouter } from "expo-router";
 import { useState } from "react";
+import { createQuery } from "../../../query/query";
 
 import CategorySelect from "../../../components/category/CategorySelect";
 import PracticeCard from "../../../components/PracticeCard";
@@ -11,18 +11,20 @@ import DurationSorter from "../../../components/DurationSorter";
 
 const Explore = () => {
   const router = useRouter();
-  const [categoryId, setCategoryId] = useState(0);
-  const [typeId, setTypeId] = useState(0);
-  const [sortOrder, setSortOrder] = useState("descending");
+  const [categoryId, setCategoryId] = useState(1);
+  const [typeId, setTypeId] = useState(1);
+  const [sortOrder, setSortOrder] = useState("asc");
 
   const practices = useQuery({
-    queryFn: mockQuery("practice/practices"),
-    queryKey: ["practice", "practices"],
+    queryFn: createQuery(
+      `/private/practice/all?order=${sortOrder}&categoryId=${categoryId}&practiceTypeId=${typeId}`,
+    ),
+    queryKey: ["practice", { sortOrder, categoryId, typeId }],
   });
 
   const category = useQuery({
-    queryFn: mockQuery(`practice/categories/${categoryId}`),
-    queryKey: ["practice", "categories", categoryId],
+    queryFn: createQuery(`private/category/${categoryId}`),
+    queryKey: ["category", categoryId],
   });
 
   const startPractice = (id) => {
@@ -53,19 +55,7 @@ const Explore = () => {
       {category.isSuccess && (
         <FlatList
           contentContainerStyle={{ gap: 15 }}
-          data={practices.data
-            .filter(
-              (practice) =>
-                practice.categoryId === categoryId &&
-                practice.typeId === typeId,
-            )
-            .sort((a, b) => {
-              if (sortOrder === "ascending") {
-                return a.durationMillis - b.durationMillis;
-              } else {
-                return b.durationMillis - a.durationMillis;
-              }
-            })}
+          data={practices.data}
           keyExtractor={(practice) => practice.durationMillis}
           renderItem={({ item }) => (
             <PracticeCard

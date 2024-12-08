@@ -1,22 +1,22 @@
 import { SafeAreaView, Text, View } from "react-native";
 import { useQuery } from "@tanstack/react-query";
-import { mockQuery } from "../../../query/mock";
+import { createQuery } from "../../../query/query";
 import ProfileBubble from "../../../components/ProfileBubble";
 
 const Profile = () => {
-  const username = useQuery({
-    queryFn: mockQuery("user/name"),
-    queryKey: ["user", "name"],
+  const user = useQuery({
+    queryFn: createQuery("/private/user"),
+    queryKey: ["user"],
   });
 
   return (
     <SafeAreaView className="flex-1 px-4 py-14 bg-bgMain">
       <View className="flex flex-col">
-        {username.isSuccess && (
+        {user.isSuccess && (
           <View>
             <Text className="w-full font-alegra-medium text-4xl">
               <Text className="font-bold">Hola, </Text>
-              <Text>{username.data}</Text>
+              <Text>{user.data.name}</Text>
             </Text>
           </View>
         )}

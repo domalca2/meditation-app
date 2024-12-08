@@ -1,8 +1,8 @@
 import { checkSchema, validationResult } from "express-validator";
 
-export default function validate(schema) {
+export default function validate(schema, locations) {
   return [
-    checkSchema(schema),
+    checkSchema(schema, locations || ["body"]),
     (req, res, next) => {
       const result = validationResult(req);
 
