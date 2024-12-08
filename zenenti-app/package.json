@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "main": "expo-router/entry",
   "scripts": {
-    "dev:live": "cross-env BACKEND_ENV=local expo start",
-    "build:prod": "cross-env BACKEND_ENV=prod eas build --platform android --profile production --no-wait",
+    "start:development": "cross-env BACKEND_ENV=development expo start",
+    "start:staging": "cross-env BACKEND_ENV=staging expo start",
+    "build:production": "cross-env BACKEND_ENV=production eas build --platform android --profile production --no-wait",
     "lint": "eslint ."
   },
   "dependencies": {

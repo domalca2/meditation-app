@@ -4,6 +4,17 @@ import backendConfig from "../backend.config";
 
 export const queryClient = new QueryClient();
 
+function blobToBase64(blob) {
+  return new Promise((resolve, reject) => {
+    // eslint-disable-next-line no-undef
+    const reader = new FileReader();
+    reader.onload = () => {
+      resolve(reader.result);
+    };
+    reader.readAsDataURL(blob);
+  });
+}
+
 export function createQuery(route, options) {
   return async () => {
     const bearerToken = await SecureStore.getItemAsync("zenenti-auth-token");
@@ -17,7 +28,16 @@ export function createQuery(route, options) {
     });
 
     if (result.ok) {
-      return await result.json();
+      if (options?.raw) {
+        const raw = await result.blob();
+        return {
+          uri: await blobToBase64(raw),
+        };
+      } else {
+        return await result.json();
+      }
+    } else {
+      return null;
     }
   };
 }

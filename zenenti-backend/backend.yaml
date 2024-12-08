@@ -224,7 +224,7 @@ paths:
           description: Duration sort order.
           schema:
             type: String
-            enum: [ascending, descending]
+            enum: [asc, desc]
         - name: limit
           in: query
           required: false

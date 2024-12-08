@@ -1,19 +1,27 @@
 import { View, Text, Image, Pressable } from "react-native";
 import { createRoundedLocalTimeString } from "../util/time";
 import { useQuery } from "@tanstack/react-query";
-import { mockQuery } from "../query/mock";
+import { createQuery } from "../query/query";
 
 import arrow from "../assets/images/ui/arrow-right.png";
 
 const PracticeCard = ({ practice, onPress }) => {
   const category = useQuery({
-    queryFn: mockQuery(`practice/categories/${practice.categoryId}`),
-    queryKey: ["practice", "categories", practice.categoryId],
+    queryFn: createQuery(`/private/category/${practice.categoryId}`),
+    queryKey: ["category", practice.categoryId],
   });
 
   const type = useQuery({
-    queryFn: mockQuery(`practice/types/${practice.typeId}`),
-    queryKey: ["practice", "types", practice.typeId],
+    queryFn: createQuery(`/private/practice-type/${practice.practiceTypeId}`),
+    queryKey: ["practice-type", practice.practiceTypeId],
+  });
+
+  const categoryIcon = useQuery({
+    queryFn: createQuery(`/private/asset/${category.data?.iconCardUrl}`, {
+      raw: true,
+    }),
+    queryKey: ["category", practice.categoryId, "icon"],
+    enabled: category.isSuccess,
   });
 
   return (
@@ -22,8 +30,8 @@ const PracticeCard = ({ practice, onPress }) => {
       onPress={onPress}
     >
       <View className="flex justify-center items-center border-2 rounded-2xl border-primary py-4 px-10">
-        {category.isSuccess && (
-          <Image className="w-14 h-14" source={category.data.icon.card} />
+        {categoryIcon.isSuccess && (
+          <Image className="w-14 h-14" source={categoryIcon.data} />
         )}
       </View>
       <View className="flex-grow">

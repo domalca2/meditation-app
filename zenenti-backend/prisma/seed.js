@@ -12,7 +12,7 @@ async function main() {
       create: {
         title: "Calma",
         iconPrimaryUrl: "images/sentiment-calm-primary.png",
-        iconSecondaryUrl: "images/sentient-calm-secondary.png",
+        iconSecondaryUrl: "images/sentiment-calm-white.png",
         iconCardUrl: "images/card-icons/calma.png",
         backgroundUrl: "images/practice-background/calma.png",
       },
@@ -24,10 +24,10 @@ async function main() {
       update: {},
       create: {
         title: "Dormir",
-        iconPrimaryUrl: "images/sentiment-calm-primary.png",
-        iconSecondaryUrl: "images/sentient-calm-secondary.png",
-        iconCardUrl: "images/card-icons/calma.png",
-        backgroundUrl: "images/practice-background/calma.png",
+        iconPrimaryUrl: "images/sleep-sounds-primary.png",
+        iconSecondaryUrl: "images/sleep-sounds-white.png",
+        iconCardUrl: "images/card-icons/dormir.png",
+        backgroundUrl: "images/practice-background/dormir.png",
       },
     }),
     bienestar: await db.category.upsert({
@@ -37,10 +37,10 @@ async function main() {
       update: {},
       create: {
         title: "Bienestar",
-        iconPrimaryUrl: "images/sentiment-calm-primary.png",
-        iconSecondaryUrl: "images/sentient-calm-secondary.png",
-        iconCardUrl: "images/card-icons/calma.png",
-        backgroundUrl: "images/practice-background/calma.png",
+        iconPrimaryUrl: "images/yoga-primary.png",
+        iconSecondaryUrl: "images/yoga-white.png",
+        iconCardUrl: "images/card-icons/bienestar.png",
+        backgroundUrl: "images/practice-background/bienestar.png",
       },
     }),
     enfoque: await db.category.upsert({
@@ -50,24 +50,15 @@ async function main() {
       update: {},
       create: {
         title: "Enfoque",
-        iconPrimaryUrl: "images/sentiment-calm-primary.png",
-        iconSecondaryUrl: "images/sentient-calm-secondary.png",
-        iconCardUrl: "images/card-icons/calma.png",
-        backgroundUrl: "images/practice-background/calma.png",
+        iconPrimaryUrl: "images/focus-primary.png",
+        iconSecondaryUrl: "images/focus-white.png",
+        iconCardUrl: "images/card-icons/enfoque.png",
+        backgroundUrl: "images/practice-background/enfoque.png",
       },
     }),
   };
 
   const practiceType = {
-    respiracion: await db.practiceType.upsert({
-      where: {
-        title: "Respiración",
-      },
-      update: {},
-      create: {
-        title: "Respiración",
-      },
-    }),
     meditacion: await db.practiceType.upsert({
       where: {
         title: "Meditación",
@@ -75,6 +66,15 @@ async function main() {
       update: {},
       create: {
         title: "Meditación",
+      },
+    }),
+    respiracion: await db.practiceType.upsert({
+      where: {
+        title: "Respiración",
+      },
+      update: {},
+      create: {
+        title: "Respiración",
       },
     }),
   };
@@ -102,7 +102,7 @@ async function main() {
         categoryId: category.calma.id,
         practiceTypeId: practiceType.respiracion.id,
         name: "Meditación guiada",
-        durationMillis: 104000,
+        durationMillis: 61000,
         audioUrl:
           "audio/practice/CA_ME_1-5_N1_Meditación guiada de un minuto para la calma.mp4",
       },
