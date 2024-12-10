@@ -32,24 +32,15 @@ const PracticeCard = ({ practice, onPress }) => {
         {category.isSuccess && (
           <Image className="w-14 h-14" source={category.data.icon.card} />
         )}
-        <View
-        className="absolute bottom-0 right-0 bg-white rounded-full p-1 shadow"
-        style={{
-          width: 30,
-          height: 30,
-          justifyContent: "center",
-          alignItems: "center",
-          transform: [{ translateX: 10 }, { translateY: 7 }],
-        }}
-      >
-        <Pressable onPress={toggleFavorite}>
-          <MaterialIcons
-            name={isFavorite ? "favorite" : "favorite-border"}
-            size={24} 
-            color={isFavorite ? "black" : "black"}
-          />
-        </Pressable>
-      </View>
+        <View className="absolute bottom-0 right-0 bg-white rounded-full p-1 shadow w-7 h-7 flex items-center justify-center translate-x-2 translate-y-2">
+          <Pressable onPress={toggleFavorite}>
+            <MaterialIcons
+              name={isFavorite ? "favorite" : "favorite-border"}
+              size={18}
+              color="black"
+            />
+          </Pressable>
+        </View>
       </View>
       <View className="flex-grow">
         <Text className="font-alegra-medium text-xl">{practice.name}</Text>
