@@ -3,19 +3,9 @@ import MessageBubble from "../../../components/MessageBubble";
 import Pet from "../../../components/Pet";
 import Button from "../../../components/Button";
 import { useRouter } from "expo-router";
-import { useMutation } from "@tanstack/react-query";
-import { mockMutation } from "../../../mock/mock";
-import { queryClient } from "../../../query/query";
 
 const EndTutorial = () => {
   const router = useRouter();
-
-  const tutorialMutation = useMutation({
-    mutationFn: mockMutation("user/finishedTutorial"),
-    onSuccess: () => {
-      queryClient.invalidateQueries(["user"]);
-    },
-  });
 
   const goBack = () => {
     router.back();
@@ -24,8 +14,6 @@ const EndTutorial = () => {
   const dismissTutorial = () => {
     router.dismissAll();
     router.replace("/main/home");
-
-    tutorialMutation.mutate(true);
   };
 
   return (

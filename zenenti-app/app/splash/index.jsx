@@ -2,23 +2,23 @@ import { Image, SafeAreaView, View } from "react-native";
 import { router } from "expo-router";
 import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { mockQuery } from "../../mock/mock";
+import { createQuery } from "../../query/query";
 
 const SplashScreen = () => {
   const user = useQuery({
-    queryFn: mockQuery("user"),
+    queryFn: createQuery("/private/user"),
     queryKey: ["user"],
   });
 
   useEffect(() => {
-    if (user.status === "success") {
-      if (user.data.finishedTutorial) {
-        router.replace("/main/home");
-      } else {
-        router.replace("/welcome/01-welcome");
-      }
+    if (!user.isSuccess) return;
+
+    if (user.data) {
+      router.replace("/main/home");
+    } else {
+      router.replace("/welcome/01-welcome");
     }
-  }, [user.status]);
+  }, [user]);
 
   const logo = require("../../assets/images/logo-zenenti.png");
   return (

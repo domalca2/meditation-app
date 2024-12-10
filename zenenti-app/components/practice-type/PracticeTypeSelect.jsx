@@ -1,16 +1,18 @@
 import { useQuery } from "@tanstack/react-query";
-import { mockQuery } from "../../mock/mock";
 import { FlatList, View } from "react-native";
-import PracticeTypeButton from "./PracticeTypeButton";
 import { useState } from "react";
+import PracticeTypeButton from "./PracticeTypeButton";
+import { createQuery } from "../../query/query";
 
 const PracticeTypeSelect = ({ onPracticeTypeSelect, className }) => {
-  const [selectedTypeId, setSelectedTypeId] = useState(0);
+  const [selectedTypeId, setSelectedTypeId] = useState(1);
 
   const practiceTypes = useQuery({
-    queryFn: mockQuery("practice/types"),
-    queryKey: ["practice", "types"],
+    queryFn: createQuery("/private/practice-type/all"),
+    queryKey: ["practice-type", "all"],
   });
+
+  if (!practiceTypes.isSuccess) return <View />;
 
   return (
     <View className={`${className}`}>

@@ -11,12 +11,13 @@ import Animated,{
   useSharedValue,
   useAnimatedStyle
 } from "react-native-reanimated";
+import { createQuery } from "../../../query/query";
 
 const BeginTutorialScreen = () => {
   const router = useRouter();
-  const username = useQuery({
-    queryKey: ["user", "name"],
-    queryFn: mockQuery("user/name"),
+  const user = useQuery({
+    queryKey: ["user"],
+    queryFn: createQuery("/private/user"),
   });
 
   function startTutorial() {
@@ -61,7 +62,7 @@ const BeginTutorialScreen = () => {
       <View className="bg-primary flex-1 justify-center px-4 pb-5">
         <View className="bg-white rounded-lg py-6 mt-8 mb-8">
           <Text className="font-alegra-regular text-2xl text-black text-center">
-            ¡Qué bien conocerte! {username.data}
+            ¡Qué bien conocerte! {user.data?.name}
           </Text>
           <Text className="font-alegra-regular text-2xl text-black text-center">
             ¿Qué te parece si empezamos?

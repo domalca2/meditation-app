@@ -29,7 +29,7 @@ const TutorialIndex = () => {
     <SafeAreaView className="bg-primary flex-1">
       <View className="flex h-full pb-4">
         <View>
-          <Text className="text-5xl text-center font-alegra-regular text-white p-6">
+          <Text className="text-5xl text-center font-montserrat-regular text-white p-6">
             ¿Qué parte quieres volver a ver?
           </Text>
         </View>

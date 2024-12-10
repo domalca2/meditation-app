@@ -3,10 +3,14 @@
   "version": "1.0.0-alpha",
   "main": "src/server.js",
   "type": "module",
+  "prisma": {
+    "seed": "node prisma/seed.js"
+  },
   "scripts": {
     "dev": "cross-env PORT=3000 MODE=development node src/server.js",
     "start": "cross-env MODE=production node src/server.js",
-    "build": "zip -r dist.zip ."
+    "build": "zip -r dist.zip .",
+    "db:reset": "npx prisma migrate reset"
   },
   "dependencies": {
     "@prisma/client": "^5.22.0",

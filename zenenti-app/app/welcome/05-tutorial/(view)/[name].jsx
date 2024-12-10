@@ -92,6 +92,7 @@ const Name = () => {
               <Text className="text-center font-alegra-medium text-white text-5xl">
                 {tutorial.title}
               </Text>
+              <Text className="heading">{tutorial.title}</Text>
             </View>
             <View className="h-full w-1/4">
               <Button
@@ -113,6 +114,25 @@ const Name = () => {
           </View>
           <Pet />
           <SlideButton onPress={handleNextTutorial} />
+          </View>
+
+          <View className="flex-1 items-center justify-center my-15">
+            <Pet />
+          </View>
+
+          <View className="w-full px-5">
+            <AudioPlayer
+              audio={tutorial.audio}
+              shouldPlay={playAudio}
+              onProgress={onPlaybackProgress}
+            />
+          </View>
+
+          <View className="w-full px-5">
+            {subtitle && <MessageBubble text={subtitle} />}
+          </View>
+
+          <SlideButton onPress={continueTutorial} />
         </View>
       </Animated.View>
     </SafeAreaView>

@@ -1,8 +1,7 @@
-import { useState } from "react";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { Image, SafeAreaView, View, Text, Pressable } from "react-native";
 import { useQuery } from "@tanstack/react-query";
-import { mockQuery } from "../../mock/mock";
+import { createQuery } from "../../query/query";
 import AudioPlayer from "../../components/AudioPlayer";
 
 import navigationArrowBack from "../../assets/images/ui/navigation-arrow-back.png";
@@ -13,19 +12,37 @@ const Practice = () => {
   const { id } = useLocalSearchParams();
 
   const practice = useQuery({
-    queryFn: mockQuery(`practice/practices/${id}`),
-    queryKey: ["practice", "practices", id],
+    queryFn: createQuery(`/private/practice/${id}`),
+    queryKey: ["practice", id],
   });
 
   const category = useQuery({
-    queryFn: mockQuery(`practice/categories/${practice.data?.categoryId}`),
-    queryKey: ["practice", "categories", practice.data?.categoryId],
+    queryFn: createQuery(`/private/category/${practice.data?.categoryId}`),
+    queryKey: ["category", practice.data?.categoryId],
     enabled: practice.isSuccess,
   });
 
   const type = useQuery({
-    queryFn: mockQuery(`practice/types/${practice.data?.typeId}`),
-    queryKey: ["practice", "types", practice.data?.typeId],
+    queryFn: createQuery(
+      `/private/practice-type/${practice.data?.practiceTypeId}`,
+    ),
+    queryKey: ["practice", practice.data?.practiceTypeId],
+    enabled: practice.isSuccess,
+  });
+
+  const background = useQuery({
+    queryFn: createQuery(`/private/asset/${category.data?.backgroundUrl}`, {
+      raw: true,
+    }),
+    queryKey: ["asset", category.data?.backgroundUrl],
+    enabled: category.isSuccess,
+  });
+
+  const audio = useQuery({
+    queryFn: createQuery(`/private/asset/${practice.data?.audioUrl}`, {
+      raw: true,
+    }),
+    queryKey: ["asset", practice.data?.audioUrl],
     enabled: practice.isSuccess,
   });
 
@@ -36,11 +53,8 @@ const Practice = () => {
   return (
     <SafeAreaView className="flex-1">
       <View className="w-full h-full relative">
-        {category.isSuccess && (
-          <Image
-            className="h-full w-full absolute"
-            source={category.data.background}
-          />
+        {background.isSuccess && (
+          <Image className="h-full w-full absolute" source={background.data} />
         )}
         <View className="h-full w-full absolute flex py-16 px-5">
           <View className="flex flex-row items-center">
@@ -61,8 +75,8 @@ const Practice = () => {
             <Image className="h-10 w-10" source={iconAudioPlaying} />
           </View>
           <View className="flex items-center justify-center px-2 py-10 rounded-xl bg-semitransparent">
-            {practice.isSuccess && (
-              <AudioPlayer audio={practice.data.audio} isPrimaryTheme={true} />
+            {audio.isSuccess && (
+              <AudioPlayer audio={audio.data} isPrimaryTheme={true} />
             )}
           </View>
         </View>

@@ -1,31 +1,26 @@
 import { Image, SafeAreaView, Text, View, FlatList } from "react-native";
-import { mockQuery } from "../../../mock/mock";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "expo-router";
+import { useState } from "react";
+import { createQuery } from "../../../query/query";
 
 import circle from "../../../assets/images/patata.png";
 import flor from "../../../assets/images/flor-sugerencias.png";
 import PracticeCard from "../../../components/PracticeCard";
 import DurationSorter from "../../../components/DurationSorter";
-import { useEffect, useState } from "react";
 
 const Home = () => {
   const router = useRouter();
-  const [sortOrder, setSortOrder] = useState("descending");
+  const [sortOrder, setSortOrder] = useState("asc");
 
-  const username = useQuery({
-    queryFn: mockQuery("user/name"),
-    queryKey: ["user", "name"],
+  const user = useQuery({
+    queryFn: createQuery("/private/user"),
+    queryKey: ["user"],
   });
 
   const practices = useQuery({
-    queryFn: mockQuery("practice/practices"),
-    queryKey: ["practice", "practices"],
-  });
-
-  const quote = useQuery({
-    queryFn: mockQuery("quotes/0"),
-    queryKey: ["quotes", 0],
+    queryFn: createQuery(`/private/practice/all?order=${sortOrder}`),
+    queryKey: ["practice", "all", sortOrder],
   });
 
   const startPractice = (id) => {
@@ -35,11 +30,11 @@ const Home = () => {
   return (
     <SafeAreaView className="flex-1 px-4 py-14 bg-bgMain">
       <View className="flex flex-col">
-        {username.isSuccess && (
+        {user.isSuccess && (
           <View>
             <Text className="w-full font-alegra-medium text-4xl">
               <Text className="font-bold">Hola, </Text>
-              <Text>{username.data}</Text>
+              <Text>{user.data.name}</Text>
             </Text>
           </View>
         )}
@@ -50,13 +45,11 @@ const Home = () => {
             </View>
           </View>
           <View className="flex-grow justify-center items-center">
-            {quote.isSuccess && (
-              <Text className="flex flex-col font-alegra-medium color-[#626161] text-l w-3/4">
-                <Text>{quote.data.message}</Text>
-                {"\n"}
-                <Text className="font-bold">{quote.data.author}</Text>
-              </Text>
-            )}
+            <Text className="flex flex-col font-alegra-medium color-[#626161] text-l w-3/4">
+              <Text>La paz comienza con una sonrisa.</Text>
+              {"\n"}
+              <Text className="font-bold">Thich Nhat Hanh</Text>
+            </Text>
           </View>
         </View>
         <Text className="font-alegra-medium text-2xl">¿Qué necesitas hoy?</Text>
@@ -75,13 +68,7 @@ const Home = () => {
         {practices.isSuccess && (
           <FlatList
             contentContainerStyle={{ gap: 15 }}
-            data={practices.data.sort((a, b) => {
-              if (sortOrder === "ascending") {
-                return a.durationMillis - b.durationMillis;
-              } else {
-                return b.durationMillis - a.durationMillis;
-              }
-            })}
+            data={practices.data}
             keyExtractor={(practice) => practice.durationMillis}
             renderItem={({ item }) => (
               <PracticeCard
