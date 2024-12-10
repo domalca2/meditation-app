@@ -24,7 +24,7 @@ const WelcomeScreen = () => {
           </Text>
         </View>
         <Button
-          text={"Comienza"}
+          text={"Comienzar"}
           onPress={() => router.push("/welcome/02-greeting")}
         />
         <StatusBar style="auto" />

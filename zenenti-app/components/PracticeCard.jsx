@@ -1,11 +1,15 @@
 import { View, Text, Image, Pressable } from "react-native";
 import { createRoundedLocalTimeString } from "../util/time";
 import { useQuery } from "@tanstack/react-query";
+import { mockQuery } from "../mock/mock";
+import { useState } from "react";
 import { createQuery } from "../query/query";
-
 import arrow from "../assets/images/ui/arrow-right.png";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
 const PracticeCard = ({ practice, onPress }) => {
+  const [isFavorite, setIsFavorite] = useState(false);
+
   const category = useQuery({
     queryFn: createQuery(`/private/category/${practice.categoryId}`),
     queryKey: ["category", practice.categoryId],
@@ -24,6 +28,10 @@ const PracticeCard = ({ practice, onPress }) => {
     enabled: category.isSuccess,
   });
 
+  const toggleFavorite = () => {
+    setIsFavorite((prev) => !prev);
+  };
+
   return (
     <Pressable
       className="flex-row bg-[#EAEEF6] rounded-lg px-3 py-3 gap-x-5"
@@ -33,6 +41,15 @@ const PracticeCard = ({ practice, onPress }) => {
         {categoryIcon.isSuccess && (
           <Image className="w-14 h-14" source={categoryIcon.data} />
         )}
+        <View className="absolute bottom-0 right-0 bg-white rounded-full p-1 shadow w-7 h-7 flex items-center justify-center translate-x-2 translate-y-2">
+          <Pressable onPress={toggleFavorite}>
+            <MaterialIcons
+              name={isFavorite ? "favorite" : "favorite-border"}
+              size={18}
+              color="black"
+            />
+          </Pressable>
+        </View>
       </View>
       <View className="flex-grow">
         <Text className="font-alegra-medium text-xl">{practice.name}</Text>

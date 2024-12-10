@@ -89,6 +89,9 @@ const Name = () => {
           <View className="flex flex-row w-full items-center justify-between px-5">
             <Text className="h-full w-1/4" />
             <View className="h-full w-1/2">
+              <Text className="text-center font-alegra-medium text-white text-5xl">
+                {tutorial.title}
+              </Text>
               <Text className="heading">{tutorial.title}</Text>
             </View>
             <View className="h-full w-1/4">
@@ -98,6 +101,19 @@ const Name = () => {
                 styleType="secondary"
               />
             </View>
+          </View>
+          <View className="w-full px-5">
+            {subtitle && <MessageBubble text={subtitle} />}
+          </View>
+          <View className="w-full px-5">
+            <AudioPlayer
+              audio={tutorial.audio}
+              shouldPlay={playAudio}
+              onProgress={onPlaybackProgress}
+            />
+          </View>
+          <Pet />
+          <SlideButton onPress={handleNextTutorial} />
           </View>
 
           <View className="flex-1 items-center justify-center my-15">

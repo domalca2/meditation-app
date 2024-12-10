@@ -1,9 +1,16 @@
 import { View, Text, SafeAreaView } from "react-native";
 import React from "react";
 import Pet from "../../../components/Pet";
-import Button from "../../../components/Button";
-import { useRouter } from "expo-router";
+import SlideButton from "../../../components/SlideButton";
+import { useRouter,useNavigation } from "expo-router";
 import { useQuery } from "@tanstack/react-query";
+import { mockQuery } from "../../../mock/mock";
+import { useEffect } from "react";
+import Animated,{
+  withSpring,
+  useSharedValue,
+  useAnimatedStyle
+} from "react-native-reanimated";
 import { createQuery } from "../../../query/query";
 
 const BeginTutorialScreen = () => {
@@ -16,9 +23,42 @@ const BeginTutorialScreen = () => {
   function startTutorial() {
     router.push("/welcome/05-tutorial/introduction");
   }
+  const translateY = useSharedValue(0);
+
+  const navigation = useNavigation();
+
+  const handlerstarTutorial = () => {
+    translateY.value = withSpring(-500, { damping: 25, stiffness: 100 });
+
+    setTimeout(() => {
+      startTutorial();
+    }, 300);
+  };
+
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ translateY: translateY.value }],
+    };
+  });
+
+  useEffect(() => {
+    const unsubscribeFocus = navigation.addListener("focus", () => {
+      translateY.value = 0; 
+    });
+  
+    const unsubscribeBlur = navigation.addListener("blur", () => {
+      translateY.value = 0; 
+    });
+  
+    return () => {
+      unsubscribeFocus();
+      unsubscribeBlur();
+    };
+  }, [navigation]);
 
   return (
     <SafeAreaView className="flex-1">
+      <Animated.View style={[{ flex: 3 }, animatedStyle]}>
       <View className="bg-primary flex-1 justify-center px-4 pb-5">
         <View className="bg-white rounded-lg py-6 mt-8 mb-8">
           <Text className="font-alegra-regular text-2xl text-black text-center">
@@ -41,8 +81,11 @@ const BeginTutorialScreen = () => {
           </Text>
         </View>
         <Pet />
-        <Button text={"Continuar"} onPress={startTutorial} />
+        <View className="w-full flex items-center mt-4">
+          <SlideButton onPress={handlerstarTutorial} />
+        </View>
       </View>
+      </Animated.View>
     </SafeAreaView>
   );
 };
