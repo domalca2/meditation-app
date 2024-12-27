@@ -112,6 +112,7 @@ const Name = () => {
               onProgress={onPlaybackProgress}
             />
           </View>
+          <View>
           <Pet />
           <SlideButton onPress={handleNextTutorial} />
           </View>

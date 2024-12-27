@@ -1,6 +1,6 @@
 import { QueryClient } from "@tanstack/react-query";
 import * as SecureStore from "expo-secure-store";
-import backendConfig from "../backend.config";
+import {getBackendConfig} from "../backend.config";
 
 export const queryClient = new QueryClient();
 
@@ -18,15 +18,17 @@ function blobToBase64(blob) {
 export function createQuery(route, options) {
   return async () => {
     const bearerToken = await SecureStore.getItemAsync("zenenti-auth-token");
-
+    // console.log('bearerToken: ',  );
     const result = await fetch(`${backendConfig.server}${route}`, {
       ...(options?.http ? options.http : {}),
       method: "GET",
       headers: {
         Authorization: bearerToken ? `bearer ${bearerToken}` : "",
       },
-    });
-
+    },
+    // console.log("Resultado de la solicitud:", await result)
+  );
+   
     if (result.ok) {
       if (options?.raw) {
         const raw = await result.blob();
@@ -46,6 +48,8 @@ export function createMutation(route, options) {
   return async (payload) => {
     const bearerToken = await SecureStore.getItemAsync("zenenti-auth-token");
 
+    const backendConfig = getBackendConfig();
+    console.log('backendConfig:', backendConfig);
     const result = await fetch(`${backendConfig.server}${route}`, {
       ...(options?.http ? options.http : {}),
       method: "POST",

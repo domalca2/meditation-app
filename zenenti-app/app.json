@@ -40,7 +40,8 @@
     "extra": {
       "eas": {
         "projectId": "364db08a-2715-423e-a179-d3528cf5c7ce"
-      }
+      },
+      "BACKEND_ENV": "development"
     }
   }
 }

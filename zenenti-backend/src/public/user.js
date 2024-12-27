@@ -26,13 +26,14 @@ router.post(
   "/register-begin",
   validate(registerBeginSchema),
   async (req, res) => {
+    console.log("Solicitud recibida en /register-begin:", req.method, req.headers, req.body);
     const user = await db.user.create({
       data: {
         name: req.body.name,
         joinDate: new Date(),
       },
     });
-
+    console.log('usuario ',req.body.name);
     const token = await generateUserAuthToken(user);
 
     res.json({ token });

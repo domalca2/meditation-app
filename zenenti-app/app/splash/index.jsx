@@ -11,7 +11,8 @@ const SplashScreen = () => {
   });
 
   useEffect(() => {
-    if (!user.isSuccess) return;
+    // console.log('usuario:', user);
+    if (!user.isSuccess) router.replace("/welcome/01-welcome");
 
     if (user.data) {
       router.replace("/main/home");

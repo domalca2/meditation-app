@@ -4,7 +4,7 @@ import Pet from "../../../components/Pet";
 import SlideButton from "../../../components/SlideButton";
 import { useRouter,useNavigation } from "expo-router";
 import { useQuery } from "@tanstack/react-query";
-import { mockQuery } from "../../../mock/mock";
+// import { mockQuery } from "../../../mock/mock";
 import { useEffect } from "react";
 import Animated,{
   withSpring,

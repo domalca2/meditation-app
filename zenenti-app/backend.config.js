@@ -1,8 +1,14 @@
 import Constants from "expo-constants";
 
+
 function getDevServerURL() {
+  
   return Constants.expoConfig?.hostUri?.split(":").shift();
 }
+export function getBackendConfig (){
+const backendEnv = Constants.expoConfig?.extra?.BACKEND_ENV || "development";
+
+console.log("BACKEND_ENV desde Constantes:", backendEnv)
 
 const development = {
   server: `http://${getDevServerURL()}:3000`,
@@ -18,8 +24,12 @@ const production = {
     "https://devzenentiwebapp-g2h6athgfkgefdbg.spaincentral-01.azurewebsites.net",
 };
 
-export default {
-  ...(process.env.BACKEND_ENV === "production" ? production : {}),
-  ...(process.env.BACKEND_ENV === "staging" ? staging : {}),
-  ...(process.env.BACKEND_ENV === "development" ? development : {}),
+const config =  {
+  ...(backendEnv === "staging" ? staging : {}),
+  ...(backendEnv === "production" ? production : {}),
+  ...(backendEnv === "development" ? development : {}),
 };
+console.log("Configuración generada:", config);
+
+  return config;
+}

@@ -7,6 +7,11 @@ import privateRouter from "./private/index.js";
 import debugMiddleware from "./middleware/debug.js";
 
 const app = express();
+
+app.use((req, res, next) => {
+  console.log(`[SERVER] Incoming request: ${req.method} ${req.url}`);
+  next();
+});
 const port = process.env.PORT || 3000;
 
 app.use(express.json());
@@ -14,6 +19,7 @@ app.use(debugMiddleware);
 
 app.use("/public", publicRouter);
 app.use("/private", privateRouter);
+
 
 const server = app.listen(port, () => {
   console.log(`[CORE] Starting server on ${port}...`);

@@ -13,10 +13,16 @@ const RegisterScreen = () => {
 
   const registerBegin = useMutation({
     mutationFn: createMutation("/public/user/register-begin"),
+
     onSuccess: async (res) => {
       await SecureStore.setItemAsync("zenenti-auth-token", res.token);
       await queryClient.invalidateQueries({ queryKey: ["user"] });
       router.push("/welcome/04-begin-tutorial");
+    },
+    onError: (error, variables, context) => {
+      console.error('❌ Error en la mutación:', error);
+      console.log('🔄 Variables enviadas:', variables);
+      console.log('📝 Contexto adicional:', context);
     },
   });
 

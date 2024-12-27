@@ -10,12 +10,12 @@ datasource db {
 model User {
   id                 Int                 @id @default(autoincrement())
   name               String
-  email              Email?              @relation(fields: [emailId], references: [id])
-  emailId            Int?
   passwordHash       String?
   joinDate           DateTime
+  emailId            Int?
   completedPractices CompletedPractice[]
   favorites          Favorite[]
+  email              Email?              @relation(fields: [emailId], references: [id])
 }
 
 model Email {
@@ -43,30 +43,30 @@ model PracticeType {
 
 model Practice {
   id                 Int                 @id @default(autoincrement())
-  name               String              @unique
-  category           Category            @relation(fields: [categoryId], references: [id])
   categoryId         Int
-  practiceType       PracticeType        @relation(fields: [practiceTypeId], references: [id])
   practiceTypeId     Int
   durationMillis     Int
   audioUrl           String
+  name               String              @unique
   completedPractices CompletedPractice[]
   favorites          Favorite[]
+  category           Category            @relation(fields: [categoryId], references: [id])
+  practiceType       PracticeType        @relation(fields: [practiceTypeId], references: [id])
 }
 
 model CompletedPractice {
   id             Int      @id @default(autoincrement())
-  practice       Practice @relation(fields: [practiceId], references: [id])
   practiceId     Int
-  user           User     @relation(fields: [userId], references: [id])
   userId         Int
   completionDate DateTime
+  practice       Practice @relation(fields: [practiceId], references: [id])
+  user           User     @relation(fields: [userId], references: [id])
 }
 
 model Favorite {
   id         Int      @id @default(autoincrement())
-  user       User     @relation(fields: [userId], references: [id])
   userId     Int
-  practice   Practice @relation(fields: [practiceId], references: [id])
   practiceId Int
+  practice   Practice @relation(fields: [practiceId], references: [id])
+  user       User     @relation(fields: [userId], references: [id])
 }
